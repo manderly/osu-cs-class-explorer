@@ -3,7 +3,7 @@
     <h1>OSU CS Class Explorer</h1>
     <p class="lead">{{$ctrl.awesomeThings.length}} reviews from current and former students</p>
     <select ng-model="selectedCourse"
-            ng-options="thing.Id as thing['whatCourseDidYouTake?'] for thing in $ctrl.awesomeThings">
+            ng-options="className.Id as className['whatCourseDidYouTake?'] for className in $ctrl.classNames">
         <option value="">Select class</option>
     </select>
   </div>

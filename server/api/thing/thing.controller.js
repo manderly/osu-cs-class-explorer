@@ -14,18 +14,11 @@ import jsonpatch from 'fast-json-patch';
 import {Thing} from '../../sqldb';
 
 var gsjson = require('google-spreadsheet-to-json');
-var jsonToPivotjson = require("json-to-pivot-json");
 
 function respondWithResult(res, statusCode) {
   statusCode = statusCode || 200;
   return function(entity) {
     if(entity) {
-      var input = entity;
-      var options = {
-        row: "whatCourseDidYouTake?",
-      };
-      var output = jsonToPivotjson(input, options);
-      console.log(output);
       return res.status(statusCode).json(entity);
     }
     return null;

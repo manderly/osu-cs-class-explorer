@@ -1,11 +1,13 @@
 import angular from 'angular';
 const ngRoute = require('angular-route');
 import routing from './main.routes';
+var jsonToPivotjson = require("json-to-pivot-json");
 
 export class MainController {
 
   awesomeThings = [];
   newThing = '';
+  classNames = [];
 
   /*@ngInject*/
   constructor($http) {
@@ -15,7 +17,14 @@ export class MainController {
   $onInit() {
     this.$http.get('/api/things')
       .then(response => {
+        //all class data
+        //todo: refactor boilerplate naming
         this.awesomeThings = response.data;
+        //just the class names
+        var options = {
+          row: "whatCourseDidYouTake?"
+        };
+        this.classNames = jsonToPivotjson(response.data, options);
       });
   }
 
