@@ -5,6 +5,7 @@ import angular from 'angular';
 import ngCookies from 'angular-cookies';
 import ngResource from 'angular-resource';
 import ngSanitize from 'angular-sanitize';
+require('angular-moment');
 
 const ngRoute = require('angular-route');
 
@@ -21,7 +22,7 @@ import util from '../components/util/util.module';
 import './app.scss';
 
 angular.module('osuCsClassExplorerApp', [ngCookies, ngResource, ngSanitize, ngRoute, navbar, footer,
-  main, constants, util
+  main, constants, util, 'angularMoment'
 ])
   .config(routeConfig);
 
