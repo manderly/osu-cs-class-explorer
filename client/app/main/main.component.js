@@ -6,7 +6,8 @@ var jsonToPivotjson = require("json-to-pivot-json");
 export class MainController {
 
   awesomeThings = [];
-  courseData = {};
+  rawCourseDataGroupedByName = {};
+  courses = {};
 
   newThing = '';
   classNames = [];
@@ -17,7 +18,7 @@ export class MainController {
     this.underscore = require('underscore');
   }
 
-  /*
+  /* Desired data structure:
   courses: {
     CS161: {
       fullName: "CS161 Intro to Computer Science",
@@ -31,25 +32,41 @@ export class MainController {
   $onInit() {
     this.$http.get('/api/things')
       .then(response => {
-        //all class data
         //todo: refactor boilerplate naming
-        this.awesomeThings = response.data;
-        console.log(this.awesomeThings);
-        //first group all the data by course name
-        this.courses = this.underscore.chain(this.awesomeThings)
+
+        //first, group all the data by course name
+        this.rawCourseDataGroupedByName = this.underscore.chain(response.data)
           .groupBy('whatCourseDidYouTake?')
           .value();
+        console.log("courses grouped by name:", this.rawCourseDataGroupedByName);
 
-        console.log("courses grouped by name:", this.courses);
-
-        //get the "CS161" name from each course and build objects out of these
-        this.underscore.each(this.courses, ((courses) => {
+        //second, craft the "CS161" name from each course and build objects with "CS161" as key
+        //todo: maybe this can be made more efficient
+        this.underscore.each(this.rawCourseDataGroupedByName, ((courses) => {
+          console.log("raw course data:", courses);
+          let key = '';
+          let tips = [];
+          let difficulty = [];
+          let timeSpent = [];
           this.underscore.each(courses, ((course) => {
-            let str = course['whatCourseDidYouTake?'].substring(0,6).split(' ').join('');
-              this.courseData[str] = {'fullName':course['whatCourseDidYouTake?']}
+            console.log("What's in this one course?", course);
+            key = course['whatCourseDidYouTake?'].substring(0,6).split(' ').join('');
+            //tips are optional, so only push when there's a tip (not undefined)
+            if (course['whatTipsWouldYouGiveStudentsTakingThisCourse?']) {
+              tips.push(course['whatTipsWouldYouGiveStudentsTakingThisCourse?']);
+            }
+            difficulty.push(course['howHardWasThisClass?']);
+            timeSpent.push(course['howMuchTimeDidYouSpendOnAverage(perWeek)ForThisClass?']);
+            //add the course data object for this particular course (and repeat)
+              this.courses[key] = {
+                'fullName':course['whatCourseDidYouTake?'],
+                'tips':tips,
+                'difficulty':difficulty,
+                'timeSpent':timeSpent
+              };
           }))
         }));
-        console.log(this.courseData);
+        console.log("final data structure:", this.courses);
 
         var options = {
           row: "whatCourseDidYouTake?"
