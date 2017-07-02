@@ -1,7 +1,7 @@
 <header class="hero-unit" id="banner">
   <div class="container"">
     <h1>OSU CS Class Explorer</h1>
-    <p class="lead">{{$ctrl.awesomeThings.length}} reviews from current and former students</p>
+    <p class="lead">{{$ctrl.reviewCount}} reviews from current and former students</p>
     <select ng-model="$ctrl.selectedCourse"
             ng-options="course as course.fullName for course in $ctrl.courses"
             ng-change="$ctrl.selectCourse($ctrl.selectedCourse)">
@@ -13,8 +13,10 @@
 <div class="container">
   <div class="row">
     <div class="col-lg-12">
-      <h1 class="page-header">Choose a class</h1>
-      <ul class="nav nav-tabs nav-stacked col-md-4 col-lg-4 col-sm-6" ng-repeat="tips in $ctrl.selectedCourse">
+      <h1>{{$ctrl.selectedCourse.fullName}}</h1>
+      <!-- tips -->
+      <h2>Tips from other students</h2>
+      <ul class="nav nav-tabs nav-stacked col-md-4 col-lg-4 col-sm-6" ng-repeat="tip in $ctrl.selectedCourse.tips track by $index">
         <li>{{tip}}</li>
       </ul>
     </div>

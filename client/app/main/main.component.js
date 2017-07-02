@@ -37,9 +37,7 @@ export class MainController {
         //todo: refactor boilerplate naming
 
         //first, group all the data by course name
-        this.rawCourseDataGroupedByName = this.underscore.chain(response.data)
-          .groupBy('whatCourseDidYouTake?')
-          .value();
+        this.rawCourseDataGroupedByName = this.underscore.groupBy(response.data, 'whatCourseDidYouTake?');
         console.log("courses grouped by name:", this.rawCourseDataGroupedByName);
 
         //second, craft the "CS161" name from each course and build objects with "CS161" as key
@@ -69,16 +67,13 @@ export class MainController {
         }));
         console.log("final data structure:", this.courses);
 
-        var options = {
-          row: "whatCourseDidYouTake?"
-        };
-        this.classNames = jsonToPivotjson(response.data, options);
-        console.log("just the class names:", this.classNames)
+        //get just the class names
+        this.classNames = this.underscore.pluck(this.courses, 'fullName').sort();
       });
   }
 
   selectCourse(val) {
-    console.log("Chose this course:", val);
+    console.log("Selected course is currently", this.selectedCourse);
   }
 
   addThing() {
