@@ -8,6 +8,8 @@ export class MainController {
   awesomeThings = [];
   rawCourseDataGroupedByName = {};
   courses = {};
+  reviewCount = 0;
+  selectedCourse = null;
 
   newThing = '';
   classNames = [];
@@ -43,17 +45,16 @@ export class MainController {
         //second, craft the "CS161" name from each course and build objects with "CS161" as key
         //todo: maybe this can be made more efficient
         this.underscore.each(this.rawCourseDataGroupedByName, ((courses) => {
-          console.log("raw course data:", courses);
           let key = '';
           let tips = [];
           let difficulty = [];
           let timeSpent = [];
           this.underscore.each(courses, ((course) => {
-            console.log("What's in this one course?", course);
             key = course['whatCourseDidYouTake?'].substring(0,6).split(' ').join('');
             //tips are optional, so only push when there's a tip (not undefined)
             if (course['whatTipsWouldYouGiveStudentsTakingThisCourse?']) {
               tips.push(course['whatTipsWouldYouGiveStudentsTakingThisCourse?']);
+              this.reviewCount ++;
             }
             difficulty.push(course['howHardWasThisClass?']);
             timeSpent.push(course['howMuchTimeDidYouSpendOnAverage(perWeek)ForThisClass?']);
@@ -72,7 +73,12 @@ export class MainController {
           row: "whatCourseDidYouTake?"
         };
         this.classNames = jsonToPivotjson(response.data, options);
+        console.log("just the class names:", this.classNames)
       });
+  }
+
+  selectCourse(val) {
+    console.log("Chose this course:", val);
   }
 
   addThing() {

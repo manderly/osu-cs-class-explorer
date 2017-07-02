@@ -1,9 +1,10 @@
 <header class="hero-unit" id="banner">
-  <div class="container">
+  <div class="container"">
     <h1>OSU CS Class Explorer</h1>
     <p class="lead">{{$ctrl.awesomeThings.length}} reviews from current and former students</p>
-    <select ng-model="selectedCourse"
-            ng-options="className.Id as className['whatCourseDidYouTake?'] for className in $ctrl.classNames">
+    <select ng-model="$ctrl.selectedCourse"
+            ng-options="course as course.fullName for course in $ctrl.courses"
+            ng-change="$ctrl.selectCourse($ctrl.selectedCourse)">
         <option value="">Select class</option>
     </select>
   </div>
@@ -13,9 +14,11 @@
   <div class="row">
     <div class="col-lg-12">
       <h1 class="page-header">Choose a class</h1>
-      <ul class="nav nav-tabs nav-stacked col-md-4 col-lg-4 col-sm-6" ng-repeat="thing in $ctrl.awesomeThings">
-        <li><a href="#" uib-tooltip="{{thing['whatCourseDidYouTake?']}}">{{thing['whatCourseDidYouTake?']}} - {{thing['howHardWasThisClass?']}} date reviewed: {{thing['whenDidYouTakeThisCourse?']}}</a></li>
+      <ul class="nav nav-tabs nav-stacked col-md-4 col-lg-4 col-sm-6" ng-repeat="tips in $ctrl.selectedCourse">
+        <li>{{tip}}</li>
       </ul>
     </div>
   </div>
 </div>
+
+<!-- ng-options="className.id as className['whatCourseDidYouTake?'] for className in $ctrl.classNames" -->
