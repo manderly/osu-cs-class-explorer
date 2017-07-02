@@ -36,29 +36,31 @@ export class MainController {
       .then(response => {
         let key;
         //response is an array of 322 or so objects, not sorted
-        //iterate through all 322+ objects, and sort with the class name as the pivot
         this.underscore.each(response.data, ((course) => {
+          //use the course name as a key, like "CS162"
           key = course['whatCourseDidYouTake?'].substring(0,6).split(' ').join('');
+
           //if this class isn't in the data object yet, add it
           if (!this.courses[key]) {
             this.classNames.push(course['whatCourseDidYouTake?']);
+            //make an empty object for this key
             this.courses[key] = {
-              'fullName':course['whatCourseDidYouTake?'],
-              'tips':[],
-              'difficulty':[],
-              'timeSpent':[]
+              'fullName': course['whatCourseDidYouTake?'],
+              'tips': [],
+              'difficulty': [],
+              'timeSpent': []
             };
-          } else {
-            //tips are optional, so only push when there's a tip (not undefined)
-            if (course['whatTipsWouldYouGiveStudentsTakingThisCourse?']) {
-              this.courses[key].tips.push(course['whatTipsWouldYouGiveStudentsTakingThisCourse?']);
-              this.reviewCount ++;
-            }
-            this.courses[key].difficulty.push(course['howHardWasThisClass?']);
-            this.courses[key].timeSpent.push(course['howMuchTimeDidYouSpendOnAverage(perWeek)ForThisClass?']);
           }
-        }));
-      });
+
+          //then push the data in
+          if (course['whatTipsWouldYouGiveStudentsTakingThisCourse?']) {
+            this.courses[key].tips.push(course['whatTipsWouldYouGiveStudentsTakingThisCourse?']);
+            this.reviewCount++;
+          }
+          this.courses[key].difficulty.push(course['howHardWasThisClass?']);
+          this.courses[key].timeSpent.push(course['howMuchTimeDidYouSpendOnAverage(perWeek)ForThisClass?']);
+      }));
+    });
   }
 
   selectCourse() {
