@@ -18,6 +18,7 @@ $fa-font-path: '/assets/fonts/font-awesome/';
 
 // Component styles are injected through gulp
 /* inject:scss */
-@import 'admin/admin.scss';
-@import 'main/main.scss';
+@import 'main/main';
+@import '../components/footer/footer';
+@import '../components/modal/modal';
 /* endinject */

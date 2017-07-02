@@ -1,12 +1,10 @@
 import angular from 'angular';
 const ngRoute = require('angular-route');
 import routing from './main.routes';
-var jsonToPivotjson = require("json-to-pivot-json");
 
 export class MainController {
 
   awesomeThings = [];
-  rawCourseDataGroupedByName = {};
   courses = {};
   reviewCount = 0;
   selectedCourse = null;
