@@ -34,45 +34,34 @@ export class MainController {
   $onInit() {
     this.$http.get('/api/things')
       .then(response => {
-        //todo: refactor boilerplate naming
-
-        //first, group all the data by course name
-        this.rawCourseDataGroupedByName = this.underscore.groupBy(response.data, 'whatCourseDidYouTake?');
-        console.log("courses grouped by name:", this.rawCourseDataGroupedByName);
-
-        //second, craft the "CS161" name from each course and build objects with "CS161" as key
-        //todo: maybe this can be made more efficient
-        this.underscore.each(this.rawCourseDataGroupedByName, ((courses) => {
-          let key = '';
-          let tips = [];
-          let difficulty = [];
-          let timeSpent = [];
-          this.underscore.each(courses, ((course) => {
-            key = course['whatCourseDidYouTake?'].substring(0,6).split(' ').join('');
+        let key;
+        //response is an array of 322 or so objects, not sorted
+        //iterate through all 322+ objects, and sort with the class name as the pivot
+        this.underscore.each(response.data, ((course) => {
+          key = course['whatCourseDidYouTake?'].substring(0,6).split(' ').join('');
+          //if this class isn't in the data object yet, add it
+          if (!this.courses[key]) {
+            this.classNames.push(course['whatCourseDidYouTake?']);
+            this.courses[key] = {
+              'fullName':course['whatCourseDidYouTake?'],
+              'tips':[],
+              'difficulty':[],
+              'timeSpent':[]
+            };
+          } else {
             //tips are optional, so only push when there's a tip (not undefined)
             if (course['whatTipsWouldYouGiveStudentsTakingThisCourse?']) {
-              tips.push(course['whatTipsWouldYouGiveStudentsTakingThisCourse?']);
+              this.courses[key].tips.push(course['whatTipsWouldYouGiveStudentsTakingThisCourse?']);
               this.reviewCount ++;
             }
-            difficulty.push(course['howHardWasThisClass?']);
-            timeSpent.push(course['howMuchTimeDidYouSpendOnAverage(perWeek)ForThisClass?']);
-            //add the course data object for this particular course (and repeat)
-              this.courses[key] = {
-                'fullName':course['whatCourseDidYouTake?'],
-                'tips':tips,
-                'difficulty':difficulty,
-                'timeSpent':timeSpent
-              };
-          }))
+            this.courses[key].difficulty.push(course['howHardWasThisClass?']);
+            this.courses[key].timeSpent.push(course['howMuchTimeDidYouSpendOnAverage(perWeek)ForThisClass?']);
+          }
         }));
-        console.log("final data structure:", this.courses);
-
-        //get just the class names
-        this.classNames = this.underscore.pluck(this.courses, 'fullName').sort();
       });
   }
 
-  selectCourse(val) {
+  selectCourse() {
     console.log("Selected course is currently", this.selectedCourse);
   }
 
