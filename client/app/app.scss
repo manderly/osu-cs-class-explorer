@@ -1,3 +1,5 @@
+$icon-font-path: '/assets/fonts/bootstrap/';
+@import '~bootstrap-sass/assets/stylesheets/bootstrap';
 $fa-font-path: '/assets/fonts/font-awesome/';
 @import '~font-awesome/scss/font-awesome';
 
@@ -14,15 +16,8 @@ $fa-font-path: '/assets/fonts/font-awesome/';
   padding: 0.2em 0;
 }
 
-/* Responsive: Portrait tablets and up */
-@media screen and (min-width: 768px) {
-  .container {
-    max-width: 730px;
-  }
-}
-
 // Component styles are injected through gulp
 /* inject:scss */
-@import 'main/main';
-@import '../components/footer/footer';
+@import 'admin/admin.scss';
+@import 'main/main.scss';
 /* endinject */
