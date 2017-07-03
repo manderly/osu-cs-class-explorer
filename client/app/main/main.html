@@ -13,7 +13,7 @@
           <!-- course picker select-->
           <ui-select ng-model="$ctrl.selectedCourse" theme="bootstrap">
             <ui-select-match placeholder="Select or search a course ...">{{$ctrl.selectedCourse}}</ui-select-match>
-            <ui-select-choices repeat="name in $ctrl.courseNames">
+            <ui-select-choices repeat="name in $ctrl.courseNames | filter: $select.search">
               <div ng-bind-html="name | highlight: $select.search"></div>
               <!-- <small ng-bind-html="item.email | highlight: $select.search"></small>-->
             </ui-select-choices>
