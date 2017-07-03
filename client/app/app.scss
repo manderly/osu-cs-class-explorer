@@ -3,6 +3,8 @@ $icon-font-path: '/assets/fonts/bootstrap/';
 $fa-font-path: '/assets/fonts/font-awesome/';
 @import '~font-awesome/scss/font-awesome';
 
+@import '~ui-select/dist/select.min';
+
 // @import url(http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,900|Roboto:300,500,700,900);
 
 /**
@@ -14,6 +16,10 @@ $fa-font-path: '/assets/fonts/font-awesome/';
   background: #ccc;
   color: #000;
   padding: 0.2em 0;
+}
+
+#course-select {
+  border:1px solid red;
 }
 
 // Component styles are injected through gulp

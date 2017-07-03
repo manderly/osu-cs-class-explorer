@@ -10,7 +10,7 @@ export class MainController {
   selectedCourse = null;
 
   newThing = '';
-  classNames = [];
+  courseNames = [];
 
   /*@ngInject*/
   constructor($http) {
@@ -40,7 +40,7 @@ export class MainController {
 
           //if this class isn't in the data object yet, add it
           if (!this.courses[key]) {
-            this.classNames.push(course['whatCourseDidYouTake?']);
+            this.courseNames.push(course['whatCourseDidYouTake?']);
             //make an empty object for this key
             this.courses[key] = {
               'fullName': course['whatCourseDidYouTake?'],

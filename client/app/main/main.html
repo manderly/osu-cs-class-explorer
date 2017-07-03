@@ -1,14 +1,36 @@
 <header class="hero-unit" id="banner">
-  <div class="container"">
+  <div class="container">
     <h1>OSU CS Class Explorer</h1>
     <p class="lead">{{$ctrl.reviewCount}} reviews from current and former students</p>
-    <select ng-model="$ctrl.selectedCourse"
-            ng-options="course as course.fullName for course in $ctrl.courses"
-            ng-change="$ctrl.selectCourse($ctrl.selectedCourse)">
-        <option value="">Select class</option>
-    </select>
-  </div>
+
+    <body class="ng-cloak">
+    <form class="form-horizontal">
+      <fieldset>
+        <div class="form-group">
+          <label class="col-sm-3 control-label"></label>
+          <div class="col-sm-6">
+
+          <!-- course picker select-->
+          <ui-select ng-model="$ctrl.selectedCourse" theme="bootstrap">
+            <ui-select-match placeholder="Select or search a course ...">{{$ctrl.selectedCourse}}</ui-select-match>
+            <ui-select-choices repeat="name in $ctrl.courseNames">
+              <div ng-bind-html="name | highlight: $select.search"></div>
+              <!-- <small ng-bind-html="item.email | highlight: $select.search"></small>-->
+            </ui-select-choices>
+          </ui-select>
+
+          </div>
+        </div>
+        </fieldset>
+      </form>
+    </body>
+
+  </div><!-- closes container-->
 </header>
+
+<!-- <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <li class="dropdown-item" ng-model="$ctrl.selectedCourse" ng-repeat="name in $ctrl.courseNames" ng-change="$ctrl.selectCourse($ctrl.selectedCourse)">blah</li>
+      </ul><!-- closes dropdown menu-->
 
 <div class="container">
   <div class="row">

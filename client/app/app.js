@@ -9,6 +9,7 @@ import ngSanitize from 'angular-sanitize';
 const ngRoute = require('angular-route');
 
 import uiBootstrap from 'angular-ui-bootstrap';
+import uiSelect from 'ui-select';
 
 import {
   routeConfig
@@ -23,7 +24,7 @@ import util from '../components/util/util.module';
 import './app.scss';
 
 angular.module('osuCsClassExplorerApp', [ngCookies, ngResource, ngSanitize, ngRoute, uiBootstrap,
-  navbar, footer, main, constants, util
+  navbar, footer, main, constants, util, uiSelect
 ])
   .config(routeConfig);
 
