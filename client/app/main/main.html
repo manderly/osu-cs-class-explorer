@@ -11,13 +11,17 @@
           <div class="col-sm-6">
 
           <!-- course picker select-->
-          <ui-select ng-model="$ctrl.selectedCourse" theme="bootstrap">
-            <ui-select-match placeholder="Select or search a course ...">{{$ctrl.selectedCourse}}</ui-select-match>
+          <ui-select ng-model="$ctrl.selectedCourseName"
+                     theme="bootstrap"
+                     on-select="$ctrl.displayThisCourse()">
+            <ui-select-match placeholder="Select or search a course ...">{{$ctrl.selectedCourseName}}</ui-select-match>
             <ui-select-choices repeat="name in $ctrl.courseNames | filter: $select.search">
               <div ng-bind-html="name | highlight: $select.search"></div>
               <!-- <small ng-bind-html="item.email | highlight: $select.search"></small>-->
             </ui-select-choices>
           </ui-select>
+
+            <!--  ng-options="course as course.fullName for course in $ctrl.courses" -->
 
           </div>
         </div>
@@ -29,16 +33,17 @@
 </header>
 
 <!-- <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <li class="dropdown-item" ng-model="$ctrl.selectedCourse" ng-repeat="name in $ctrl.courseNames" ng-change="$ctrl.selectCourse($ctrl.selectedCourse)">blah</li>
+        <li class="dropdown-item" ng-model="$ctrl.selectedCourse"
+        ng-repeat="name in $ctrl.courseNames" ng-change="$ctrl.selectCourse($ctrl.selectedCourse)">blah</li>
       </ul><!-- closes dropdown menu-->
-
 <div class="container">
   <div class="row">
     <div class="col-lg-12">
-      <h1>{{$ctrl.selectedCourse.fullName}}</h1>
+      <h1>{{$ctrl.displayCourse.fullName}}</h1>
       <!-- tips -->
       <h2>Tips from other students</h2>
-      <ul class="nav nav-tabs nav-stacked col-md-4 col-lg-4 col-sm-6" ng-repeat="tip in $ctrl.selectedCourse.tips track by $index">
+      <ul class="nav nav-tabs nav-stacked col-md-4 col-lg-4 col-sm-6"
+          ng-repeat="tip in $ctrl.displayCourse.tips track by $index">
         <li>{{tip}}</li>
       </ul>
     </div>

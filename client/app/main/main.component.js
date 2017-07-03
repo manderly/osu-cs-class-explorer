@@ -7,7 +7,8 @@ export class MainController {
   awesomeThings = [];
   courses = {};
   reviewCount = 0;
-  selectedCourse = null;
+  selectedCourseName = null; //course name from the select
+  displayCourse = null; //course to display
 
   newThing = '';
   courseNames = [];
@@ -61,8 +62,11 @@ export class MainController {
     });
   }
 
-  selectCourse() {
-    console.log("Selected course is currently", this.selectedCourse);
+  displayThisCourse() {
+    //get the CS123 code
+    let courseKey = this.selectedCourseName.substring(0,6).split(' ').join('');
+    console.log("the course key is now", courseKey);
+    this.displayCourse = this.courses[courseKey];
   }
 
   addThing() {
