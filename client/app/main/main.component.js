@@ -31,13 +31,26 @@ export class MainController {
    */
 
   $onInit() {
+    //uses static data for now
     this.$http.get('/api/things')
+      .then(response => {
+        this.courses = response.data;
+        console.log("course data fresh from a json file:", this.courses);
+
+        this.underscore.each(response.data, ((course) => {
+          this.reviewCount ++;
+          this.courseNames.push(course['fullName']);
+        }))
+      });
+  }
+
+      /* use this to make the course data json  - move to server later
       .then(response => {
         let key;
         //response is an array of 322 or so objects, not sorted
         this.underscore.each(response.data, ((course) => {
           //use the course name as a key, like "CS162"
-          key = course['whatCourseDidYouTake?'].substring(0,6).split(' ').join('');
+          key = course['whatCourseDidYouTake?'].substring(0, 6).split(' ').join('');
 
           //if this class isn't in the data object yet, add it
           if (!this.courses[key]) {
@@ -58,9 +71,10 @@ export class MainController {
           }
           this.courses[key].difficulty.push(course['howHardWasThisClass?']);
           this.courses[key].timeSpent.push(course['howMuchTimeDidYouSpendOnAverage(perWeek)ForThisClass?']);
-      }));
-    });
-  }
+        }));
+        console.log("course data fresh from Google:", this.courses);
+      });
+      */
 
   displayThisCourse() {
     //get the CS123 code

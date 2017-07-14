@@ -14,6 +14,7 @@ import jsonpatch from 'fast-json-patch';
 import {Thing} from '../../sqldb';
 
 var gsjson = require('google-spreadsheet-to-json');
+var fs = require('fs');
 
 function respondWithResult(res, statusCode) {
   statusCode = statusCode || 200;
@@ -65,6 +66,10 @@ function handleError(res, statusCode) {
     res.status(statusCode).send(err);
   };
 }
+const courseData = require('../../static/coursedata.json');
+
+// Gets the static data (for dev purposes)
+
 
 var creds_json = {
   client_email: 'osu-class-explorer@api-project-700272715173.iam.gserviceaccount.com',
@@ -74,12 +79,16 @@ var creds_json = {
 
 // Gets the entire spreadsheet as a giant json object
 export function index(req, res) {
+
+  return res.status(200).json(courseData);
+  /*
   return gsjson({
     spreadsheetId: '1pdnIGycCQ5UZGIDNQBQd5hj2qVooxkbhZxbIx7Sn1nc',
     credentials: creds_json
   })
     .then(respondWithResult(res))
     .catch(handleError(res));
+    */
 }
 
 // Gets a single Thing from the DB
