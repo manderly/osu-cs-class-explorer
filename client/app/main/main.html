@@ -1,7 +1,7 @@
 <header class="hero-unit" id="banner">
   <div class="container">
     <h1>OSU CS Class Explorer</h1>
-    <p class="lead">{{$ctrl.reviewCount}} reviews from current and former students</p>
+    <p class="lead">250+ reviews from current and former students</p>
 
     <body class="ng-cloak">
     <form class="form-horizontal">
@@ -42,9 +42,9 @@
       <h1>{{$ctrl.displayCourse.fullName}}</h1>
       <!-- tips -->
       <h2>Tips from other students</h2>
-      <ul class="nav nav-tabs nav-stacked col-md-4 col-lg-4 col-sm-6"
+      <ul class="nav nav-tabs nav-stacked col-md-12 col-lg-12 col-sm-12 well"
           ng-repeat="tip in $ctrl.displayCourse.tips track by $index">
-        <li>{{tip}}</li>
+        <li>{{tip.tip}} {{tip.timestamp}}</li>
       </ul>
     </div>
   </div>

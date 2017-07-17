@@ -67,6 +67,7 @@ function handleError(res, statusCode) {
   };
 }
 const courseData = require('../../static/coursedata.json');
+const underscore = require('underscore');
 
 // Gets the static data (for dev purposes)
 
@@ -80,15 +81,62 @@ var creds_json = {
 // Gets the entire spreadsheet as a giant json object
 export function index(req, res) {
 
-  return res.status(200).json(courseData);
-  /*
-  return gsjson({
-    spreadsheetId: '1pdnIGycCQ5UZGIDNQBQd5hj2qVooxkbhZxbIx7Sn1nc',
-    credentials: creds_json
-  })
-    .then(respondWithResult(res))
-    .catch(handleError(res));
-    */
+  gsjson({
+     spreadsheetId: '1pdnIGycCQ5UZGIDNQBQd5hj2qVooxkbhZxbIx7Sn1nc',
+     credentials: creds_json
+   })
+   .then((rawData) => {
+     let key;
+     let courses = {};
+     let courseNames = [];
+     let reviewCount = 0;
+     //response is an array of 322 or so objects, not sorted
+     underscore.each(rawData, ((course) => {
+       console.log(course);
+       //use the course name as a key, like "CS162"
+       key = course['whatCourseDidYouTake?'].substring(0, 6).split(' ').join('');
+
+       //if this class isn't in the data object yet, add it
+       if (!courses[key]) {
+         courseNames.push(course['whatCourseDidYouTake?']);
+         //make an empty object for this key
+         courses[key] = {
+           'fullName': course['whatCourseDidYouTake?'],
+           'tips': [],
+           'difficulty': [],
+           'timeSpent': []
+         };
+       }
+
+       //then push the data in
+       let tip = {};
+       if (course['whatTipsWouldYouGiveStudentsTakingThisCourse?']) {
+         //push the tip and the date of that tip
+         tip = {
+           tip: course['whatTipsWouldYouGiveStudentsTakingThisCourse?'],
+           date: course['timestamp']
+         };
+         courses[key].tips.push(tip);
+         reviewCount++;
+       }
+
+       courses[key].difficulty.push(course['howHardWasThisClass?']);
+       courses[key].timeSpent.push(course['howMuchTimeDidYouSpendOnAverage(perWeek)ForThisClass?']);
+     }));
+
+     let appData = {
+       courses: courses,
+       courseNames: courseNames,
+       reviewCount: reviewCount
+     };
+     
+     return appData;
+   })
+   .then(respondWithResult(res))
+   .catch(handleError(res));
+
+
+  //return res.status(200).json(courseData);
 }
 
 // Gets a single Thing from the DB

@@ -16,14 +16,13 @@ export class MainController {
   /*@ngInject*/
   constructor($http) {
     this.$http = $http;
-    this.underscore = require('underscore');
   }
 
   /* Desired data structure:
   courses: {
     CS161: {
       fullName: "CS161 Intro to Computer Science",
-      reviews: ["sdasda", "wow such hard", "easy"]
+      tips: [{tip: "sdasda", timestamp: 1234.1234}, {tip: "wow such hard",...} ]
     },
     CS162: {
       ...
@@ -34,47 +33,13 @@ export class MainController {
     //uses static data for now
     this.$http.get('/api/things')
       .then(response => {
-        this.courses = response.data;
+        console.log("this response came in:", response);
+        this.courses = response.data.courses;
+        this.courseNames = response.data.courseNames;
+        this.reviewCount = response.data.reviewCount;
         console.log("course data fresh from a json file:", this.courses);
-
-        this.underscore.each(response.data, ((course) => {
-          this.reviewCount ++;
-          this.courseNames.push(course['fullName']);
-        }))
       });
   }
-
-      /* use this to make the course data json  - move to server later
-      .then(response => {
-        let key;
-        //response is an array of 322 or so objects, not sorted
-        this.underscore.each(response.data, ((course) => {
-          //use the course name as a key, like "CS162"
-          key = course['whatCourseDidYouTake?'].substring(0, 6).split(' ').join('');
-
-          //if this class isn't in the data object yet, add it
-          if (!this.courses[key]) {
-            this.courseNames.push(course['whatCourseDidYouTake?']);
-            //make an empty object for this key
-            this.courses[key] = {
-              'fullName': course['whatCourseDidYouTake?'],
-              'tips': [],
-              'difficulty': [],
-              'timeSpent': []
-            };
-          }
-
-          //then push the data in
-          if (course['whatTipsWouldYouGiveStudentsTakingThisCourse?']) {
-            this.courses[key].tips.push(course['whatTipsWouldYouGiveStudentsTakingThisCourse?']);
-            this.reviewCount++;
-          }
-          this.courses[key].difficulty.push(course['howHardWasThisClass?']);
-          this.courses[key].timeSpent.push(course['howMuchTimeDidYouSpendOnAverage(perWeek)ForThisClass?']);
-        }));
-        console.log("course data fresh from Google:", this.courses);
-      });
-      */
 
   displayThisCourse() {
     //get the CS123 code
