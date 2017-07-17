@@ -33,11 +33,9 @@ export class MainController {
     //uses static data for now
     this.$http.get('/api/things')
       .then(response => {
-        console.log("this response came in:", response);
         this.courses = response.data.courses;
         this.courseNames = response.data.courseNames;
         this.reviewCount = response.data.reviewCount;
-        console.log("course data fresh from a json file:", this.courses);
       });
   }
 

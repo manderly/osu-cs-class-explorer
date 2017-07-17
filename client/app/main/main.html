@@ -32,10 +32,6 @@
   </div><!-- closes container-->
 </header>
 
-<!-- <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <li class="dropdown-item" ng-model="$ctrl.selectedCourse"
-        ng-repeat="name in $ctrl.courseNames" ng-change="$ctrl.selectCourse($ctrl.selectedCourse)">blah</li>
-      </ul><!-- closes dropdown menu-->
 <div class="container">
   <div class="row">
     <div class="col-lg-12">
@@ -44,10 +40,8 @@
       <h2>Tips from other students</h2>
       <ul class="nav nav-tabs nav-stacked col-md-12 col-lg-12 col-sm-12 well"
           ng-repeat="tip in $ctrl.displayCourse.tips track by $index">
-        <li>{{tip.tip}} {{tip.timestamp}}</li>
+        <li>{{tip.tip}}<br/><i>{{tip.timestamp}}</i></li>
       </ul>
     </div>
   </div>
 </div>
-
-<!-- ng-options="className.id as className['whatCourseDidYouTake?'] for className in $ctrl.classNames" -->
