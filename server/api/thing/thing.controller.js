@@ -118,7 +118,7 @@ export function index(req, res) {
            tip: course['whatTipsWouldYouGiveStudentsTakingThisCourse?'],
            timestamp: moment(rawTimestamp).format('MMMM YYYY')
          };
-         courses[key].tips.push(tip);
+         courses[key].tips.unshift(tip);
          reviewCount++;
        }
 

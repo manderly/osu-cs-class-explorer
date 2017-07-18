@@ -20,9 +20,6 @@
               <!-- <small ng-bind-html="item.email | highlight: $select.search"></small>-->
             </ui-select-choices>
           </ui-select>
-
-            <!--  ng-options="course as course.fullName for course in $ctrl.courses" -->
-
           </div>
         </div>
         </fieldset>
@@ -38,9 +35,10 @@
       <h1>{{$ctrl.displayCourse.fullName}}</h1>
       <!-- tips -->
       <h2>Tips from other students</h2>
+      <p>Thanks, <a href="https://www.reddit.com/r/OSUOnlineCS">/r/OSUOnlineCS</a>, for collecting this data and sharing it publicly.</p>
       <ul class="nav nav-tabs nav-stacked col-md-12 col-lg-12 col-sm-12 well"
           ng-repeat="tip in $ctrl.displayCourse.tips track by $index">
-        <li>{{tip.tip}}<br/><i>{{tip.timestamp}}</i></li>
+        <li>"{{tip.tip}}"<br/><span class="pull-right"><i>{{tip.timestamp}}</i></span></li>
       </ul>
     </div>
   </div>
