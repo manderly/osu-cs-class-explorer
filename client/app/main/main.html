@@ -1,4 +1,5 @@
 <header class="hero-unit" id="banner">
+
   <div class="container">
     <h1>OSU CS Class Explorer</h1>
     <p class="lead">250+ reviews from current and former students</p>
@@ -31,15 +32,47 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-lg-12">
-      <h1>{{$ctrl.displayCourse.fullName}}</h1>
-      <!-- tips -->
+    <h1>{{$ctrl.displayCourse.fullName}}</h1>
+
+    <!-- Difficulty and hours spent (left side in full screen) -->
+    <div class="col-lg-4">
+      <!-- Difficulty -->
+      <div class="col-lg-12">
+        <h2>Difficulty scores</h2>
+        <p>On a 1-5 scale, where 1 is "anyone can get an A" and 5 is "prepare to be wrecked by this course". Each section represents a percentage of students who responded with a particular score rating for this course.</p>
+        <div class="col-lg-12">
+          <canvas id="doughnut"
+                  class="chart chart-doughnut"
+                  chart-data="$ctrl.difficultyData"
+                  chart-labels="$ctrl.difficultyLabels"
+                  chart-colors="$ctrl.chartColorsRed">
+          </canvas>
+        </div>
+      </div>
+
+      <!-- Hours spent -->
+      <div class="col-lg-12">
+        <h2>Time spent per week</h2>
+        <p>Each section of the chart represents a percentage of student responses re: hours spent on class per week.</p>
+        <div class="col-lg-12">
+          <canvas id="doughnut"
+                  class="chart chart-doughnut"
+                  chart-data="$ctrl.timeSpentData"
+                  chart-labels="$ctrl.timeSpentLabels"
+                  chart-colors="$ctrl.chartColorsRed">
+          </canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- tips -->
+    <div class="col-lg-8">
       <h2>Tips from other students</h2>
-      <p>Thanks, <a href="https://www.reddit.com/r/OSUOnlineCS">/r/OSUOnlineCS</a>, for collecting this data and sharing it publicly.</p>
       <ul class="nav nav-tabs nav-stacked col-md-12 col-lg-12 col-sm-12 well"
           ng-repeat="tip in $ctrl.displayCourse.tips track by $index">
         <li>"{{tip.tip}}"<br/><span class="pull-right"><i>{{tip.timestamp}}</i></span></li>
       </ul>
+      <p>Thanks, <a href="https://www.reddit.com/r/OSUOnlineCS">/r/OSUOnlineCS</a>, for collecting this data and sharing it publicly.</p>
     </div>
   </div>
 </div>

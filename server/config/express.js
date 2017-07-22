@@ -31,6 +31,9 @@ export default function(app) {
     app.use(favicon(path.join(config.root, 'client', 'favicon.ico')));
   }
 
+  app.use('/scripts/chart', express.static(path.join(config.root, 'node_modules/chart.js/dist/')));
+  app.use('/scripts/angularchart', express.static(path.join(config.root, '/node_modules/angular-chart.js/dist/')));
+
   app.set('appPath', path.join(config.root, 'client'));
   app.use(express.static(app.get('appPath')));
   app.use(morgan('dev'));
@@ -43,7 +46,6 @@ export default function(app) {
   app.use(bodyParser.json());
   app.use(methodOverride());
   app.use(cookieParser());
-
 
   // Persist sessions with MongoStore / sequelizeStore
   // We need to enable sessions for passport-twitter because it's an

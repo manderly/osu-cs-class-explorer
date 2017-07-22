@@ -23,8 +23,10 @@ import util from '../components/util/util.module';
 
 import './app.scss';
 
+//<script src="../node_modules/angular-chart.js/dist/angular-chart.min.js"></script>
+
 angular.module('osuCsClassExplorerApp', [ngCookies, ngResource, ngSanitize, ngRoute, uiBootstrap,
-  navbar, footer, main, constants, util, uiSelect
+  navbar, footer, main, constants, util, uiSelect, 'chart.js'
 ])
   .config(routeConfig);
 

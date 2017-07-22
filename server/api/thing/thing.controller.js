@@ -93,7 +93,6 @@ export function index(req, res) {
      let reviewCount = 0;
      //response is an array of 322 or so objects, not sorted
      underscore.each(rawData, ((course) => {
-       console.log(course);
        //use the course name as a key, like "CS162"
        key = course['whatCourseDidYouTake?'].substring(0, 6).split(' ').join('');
 
@@ -104,8 +103,8 @@ export function index(req, res) {
          courses[key] = {
            'fullName': course['whatCourseDidYouTake?'],
            'tips': [],
-           'difficulty': [],
-           'timeSpent': []
+           'difficulty': [0, 0, 0, 0, 0],
+           'timeSpent': [0, 0, 0, 0]
          };
        }
 
@@ -122,8 +121,24 @@ export function index(req, res) {
          reviewCount++;
        }
 
-       courses[key].difficulty.push(course['howHardWasThisClass?']);
-       courses[key].timeSpent.push(course['howMuchTimeDidYouSpendOnAverage(perWeek)ForThisClass?']);
+       //build the difficulty array, which has 5 elements: [0, 0, 0, 0, 0]
+       //Difficulty score from user can be 1, 2, 3, 4, or 5
+       //Conveniently, if we find, say, a score of 2, we can -1 from that 2 to figure out which index to increase by 1
+       let courseDifficulty = course['howHardWasThisClass?'];
+       courses[key].difficulty[courseDifficulty - 1] = courses[key].difficulty[courseDifficulty - 1] + 1;
+
+       //build the timeSpent array, which has 4 elements: [1, 2, 3, 4]
+       //look at the the timeSpent string ("0-5 hours", "6-12 hours", "13-18 hours", "18+ hours")
+       let courseTimeSpent = course['howMuchTimeDidYouSpendOnAverage(perWeek)ForThisClass?'];
+       if (courseTimeSpent === "0-5 hours") {
+         courses[key].timeSpent[0] = courses[key].timeSpent[0] + 1;
+       } else if (courseTimeSpent === "6-12 hours") {
+         courses[key].timeSpent[1] = courses[key].timeSpent[1] + 1;
+       } else if (courseTimeSpent === "13-18 hours") {
+         courses[key].timeSpent[2] = courses[key].timeSpent[2] + 1;
+       } else if (courseTimeSpent === "18+ hours") {
+         courses[key].timeSpent[3] = courses[key].timeSpent[3] + 1;
+       }
      }));
 
      let appData = {
