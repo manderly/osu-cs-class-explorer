@@ -13,14 +13,20 @@ export class MainController {
   newThing = '';
   courseNames = [];
 
-  difficultyLabels = ["1 - Anyone can get an A", "2 - Not too bad", "3 - Some hard parts", "4 - Pretty tough", "5 - Prepare to be wrecked"];
+  difficultyLabels = ["1 - Easy A", "2 - Not too bad", "3 - Some hard parts", "4 - Tough class", "5 - Prepare to be wrecked"];
   difficultyData = []; //array of 5 elements
 
   timeSpentLabels = ["0-5 hours", "6-12 hours", "13-18 hours", "18+ hours"];
   timeSpentData = []; //array of 4 elements
 
   //light to dark orange tones
-  chartColorsRed = [ '#fedbcd', '#fdb89b', '#fa7138', '#dc4405', '#641f02'];
+  chartColors = [ '#fedbcd', '#fdb89b', '#fa7138', '#dc4405', '#641f02'];
+  chartOptions = {
+    cutoutPercentage: 40,
+    legend: {
+      display: true
+    }
+  };
 
   /*@ngInject*/
   constructor($http) {

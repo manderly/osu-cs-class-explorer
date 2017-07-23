@@ -1,7 +1,7 @@
 <header class="hero-unit orange" id="banner">
 
   <div class="container">
-    <h1>OSU CS Class Explorer</h1>
+    <h1>OSU eCampus CS Course Explorer</h1>
     <p class="lead">250+ reviews from current and former students</p>
 
     <body class="ng-cloak">
@@ -45,7 +45,8 @@
                   class="chart chart-doughnut"
                   chart-data="$ctrl.difficultyData"
                   chart-labels="$ctrl.difficultyLabels"
-                  chart-colors="$ctrl.chartColorsRed">
+                  chart-colors="$ctrl.chartColors"
+                  chart-options="$ctrl.chartOptions">
           </canvas>
         </div>
       </div>
@@ -59,7 +60,8 @@
                   class="chart chart-doughnut"
                   chart-data="$ctrl.timeSpentData"
                   chart-labels="$ctrl.timeSpentLabels"
-                  chart-colors="$ctrl.chartColorsRed">
+                  chart-colors="$ctrl.chartColors"
+                  chart-options="$ctrl.chartOptions">
           </canvas>
         </div>
       </div>
@@ -76,3 +78,5 @@
     </div>
   </div>
 </div>
+
+<!-- see footer for credits and links -->
