@@ -19,7 +19,8 @@ export class MainController {
   timeSpentLabels = ["0-5 hours", "6-12 hours", "13-18 hours", "18+ hours"];
   timeSpentData = []; //array of 4 elements
 
-  chartColorsRed = [ '#fdcecf', '#fb9d9f', '#f7464a', '#93060a', '#310203'];
+  //light to dark orange tones
+  chartColorsRed = [ '#fedbcd', '#fdb89b', '#fa7138', '#dc4405', '#641f02'];
 
   /*@ngInject*/
   constructor($http) {
