@@ -10,7 +10,6 @@ export class MainController {
   selectedCourseName = null; //course name from the select
   displayCourse = null; //course to display
 
-  newThing = '';
   courseNames = [];
 
   difficultyLabels = ["1 - Easy A", "2 - Not too bad", "3 - Some hard parts", "4 - Tough class", "5 - Prepare to be wrecked"];
@@ -34,11 +33,10 @@ export class MainController {
   }
 
   $onInit() {
-    //uses static data for now
     this.$http.get('/api/things')
       .then(response => {
         this.courses = response.data.courses;
-        this.courseNames = response.data.courseNames;
+        this.courseNames = response.data.courseNames.sort();
         this.reviewCount = response.data.reviewCount;
       });
   }
@@ -49,19 +47,6 @@ export class MainController {
     this.displayCourse = this.courses[courseKey];
     this.difficultyData = this.displayCourse.difficulty;
     this.timeSpentData = this.displayCourse.timeSpent;
-  }
-
-  addThing() {
-    if(this.newThing) {
-      this.$http.post('/api/things', {
-        name: this.newThing
-      });
-      this.newThing = '';
-    }
-  }
-
-  deleteThing(thing) {
-    this.$http.delete(`/api/things/${thing._id}`);
   }
 }
 
