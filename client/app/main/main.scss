@@ -1,3 +1,7 @@
+:root {
+  --osuOrange: #dc4405;
+}
+
 .thing-form {
   margin: 20px 0;
 }
@@ -29,5 +33,33 @@
 
 /* OSU orange */
 .orange {
-  background-color: #dc4405;
+  background-color: var(--osuOrange);
+}
+
+.huge-text {
+  font-size:60px;
+}
+
+.welcome-box {
+  text-align:center;
+  font-size:21px;
+  padding:5%;
+}
+
+.welcome-box-icon {
+  color: var(--osuOrange);
+  padding: 5px;
+  font-size:10em;
+}
+
+.pad-top {
+  padding-top: 30px;
+}
+
+.margin-bottom {
+  margin-bottom: 30px;
+}
+
+.test {
+  border: solid red 1px;
 }

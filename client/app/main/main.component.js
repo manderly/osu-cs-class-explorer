@@ -12,7 +12,7 @@ export class MainController {
 
   courseNames = [];
 
-  difficultyLabels = ["1 - Easy A", "2 - Not too bad", "3 - Some hard parts", "4 - Tough class", "5 - Prepare to be wrecked"];
+  difficultyLabels = ["1 - Easy A", "2 - Mostly easy", "3 - Kinda hard", "4 - Very challenging", "5 - Prepare to be wrecked"];
   difficultyData = []; //array of 5 elements
 
   timeSpentLabels = ["0-5 hours", "6-12 hours", "13-18 hours", "18+ hours"];
@@ -23,7 +23,12 @@ export class MainController {
   chartOptions = {
     cutoutPercentage: 40,
     legend: {
-      display: true
+      display: true,
+      position: 'bottom',
+      labels: {
+        fontSize: 14,
+        boxWidth: 20
+      }
     }
   };
 

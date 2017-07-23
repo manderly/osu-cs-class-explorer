@@ -30,32 +30,40 @@
   </div><!-- closes container-->
 </header>
 
-<div class="container">
-  <div class="row">
-    <h1>{{$ctrl.displayCourse.fullName}}</h1>
+<div class="container" ng-hide="$ctrl.selectedCourseName">
+  <div class="col-lg-3"></div>
+  <div class="col-lg-6 welcome-box">
+    <i class="fa fa-arrow-circle-up welcome-box-icon" aria-hidden="true"></i>
+    <p><b>Select a course</b> from the menu above to read real student reviews.</p>
+  </div>
+  <div class="col-lg-3"></div>
+</div>
+
+<div class="container col-lg-12" ng-show="$ctrl.selectedCourseName">
+    <div class="col-md-12">
+      <h1>{{$ctrl.displayCourse.fullName}}</h1>
+    </div>
 
     <!-- Difficulty and hours spent (left side in full screen) -->
-    <div class="col-lg-4">
+    <div class="col-md-5">
       <!-- Difficulty -->
-      <div class="col-lg-12">
-        <h2>Difficulty scores</h2>
-        <p>On a 1-5 scale, where 1 is "anyone can get an A" and 5 is "prepare to be wrecked by this course". Each section represents a percentage of students who responded with a particular score rating for this course.</p>
-        <div class="col-lg-12">
-          <canvas id="doughnut"
-                  class="chart chart-doughnut"
-                  chart-data="$ctrl.difficultyData"
-                  chart-labels="$ctrl.difficultyLabels"
-                  chart-colors="$ctrl.chartColors"
-                  chart-options="$ctrl.chartOptions">
-          </canvas>
-        </div>
+      <h2>Difficulty scores</h2>
+      <p>On a 1-5 scale, where 1 is "anyone can get an A" and 5 is "prepare to be wrecked by this course". Each section represents a percentage of students who responded with a particular score rating for this course.</p>
+      <div class="col-md-12">
+        <canvas id="doughnut"
+                class="chart chart-doughnut margin-bottom"
+                chart-data="$ctrl.difficultyData"
+                chart-labels="$ctrl.difficultyLabels"
+                chart-colors="$ctrl.chartColors"
+                chart-options="$ctrl.chartOptions">
+        </canvas>
       </div>
 
       <!-- Hours spent -->
-      <div class="col-lg-12">
+      <div>
         <h2>Time spent per week</h2>
         <p>Each section of the chart represents a percentage of student responses re: hours spent on class per week.</p>
-        <div class="col-lg-12">
+        <div class="col-md-12">
           <canvas id="doughnut"
                   class="chart chart-doughnut"
                   chart-data="$ctrl.timeSpentData"
@@ -68,7 +76,7 @@
     </div>
 
     <!-- tips -->
-    <div class="col-lg-8">
+    <div class="col-md-7">
       <h2>Tips from other students</h2>
       <ul class="nav nav-tabs nav-stacked col-md-12 col-lg-12 col-sm-12 well"
           ng-repeat="tip in $ctrl.displayCourse.tips track by $index">
@@ -76,7 +84,6 @@
       </ul>
       <p>Thanks, <a href="https://www.reddit.com/r/OSUOnlineCS">/r/OSUOnlineCS</a>, for collecting this data and sharing it publicly.</p>
     </div>
-  </div>
 </div>
 
 <!-- see footer for credits and links -->
