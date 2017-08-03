@@ -22,6 +22,13 @@ $fa-font-path: '/assets/fonts/font-awesome/';
   border:1px solid red;
 }
 
+.chart-legend li span {
+  border:1px solid red;
+  width: 12px;
+  height: 12px;
+  margin-right: 5px;
+}
+
 // Component styles are injected through gulp
 /* inject:scss */
 @import 'main/main';

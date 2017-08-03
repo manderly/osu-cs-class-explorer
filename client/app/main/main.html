@@ -50,13 +50,11 @@
       <h2>Difficulty scores</h2>
       <p>On a 1-5 scale, where 1 is "anyone can get an A" and 5 is "prepare to be wrecked by this course". Each section represents a percentage of students who responded with a particular score rating for this course.</p>
       <div class="col-md-12">
-        <canvas id="doughnut"
-                class="chart chart-doughnut margin-bottom"
-                chart-data="$ctrl.difficultyData"
-                chart-labels="$ctrl.difficultyLabels"
-                chart-colors="$ctrl.chartColors"
-                chart-options="$ctrl.chartOptions">
+        <canvas id="donut-difficulty"
+                class="chart">
         </canvas>
+        <div id="chart-legends"></div>
+        <!-- <div id="difficulty-legend" class="chart-legend"></div> -->
       </div>
 
       <!-- Hours spent -->
@@ -64,7 +62,7 @@
         <h2>Time spent per week</h2>
         <p>Each section of the chart represents a percentage of student responses re: hours spent on class per week.</p>
         <div class="col-md-12">
-          <canvas id="doughnut"
+          <canvas id="donut-timespent"
                   class="chart chart-doughnut"
                   chart-data="$ctrl.timeSpentData"
                   chart-labels="$ctrl.timeSpentLabels"

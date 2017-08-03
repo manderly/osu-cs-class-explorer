@@ -46,12 +46,59 @@ export class MainController {
       });
   }
 
+  legendCallback(chart) {
+    var text = [];
+    text.push('<ul>');
+    for (let i = 0; i < this.difficultyData.length; i++) {
+      console.log(this.difficultyData[i]); // see what's inside the obj.
+      text.push('<li>');
+      text.push('<span style="background-color:' + this.difficultyData[i].borderColor + '">' + this.difficultyData[i].label + '</span>');
+      text.push('</li>');
+    }
+    text.push('</ul>');
+    return text.join("");
+  }
+
   displayThisCourse() {
     //get the CS123 code
     let courseKey = this.selectedCourseName.substring(0,6).split(' ').join('');
     this.displayCourse = this.courses[courseKey];
     this.difficultyData = this.displayCourse.difficulty;
     this.timeSpentData = this.displayCourse.timeSpent;
+
+    const difficultyChartData = {
+      labels: this.difficultyLabels,
+      datasets: [{
+        data: this.difficultyData,
+        backgroundColor: this.chartColors
+      }]
+      // These labels appear in the legend and in the tooltips when hovering different arcs
+    };
+
+    const ctx = document.getElementById("donut-difficulty").getContext("2d");
+    const difficultyChart = new Chart(ctx, {
+      type: 'doughnut',
+      data: difficultyChartData,
+      options: {
+        legendCallback: (difficultyChart) => {
+          console.log("123 using the thing that generates the legend");
+          var text = [];
+          text.push('<ul>');
+          console.log(difficultyChart);
+          for (let i = 0; i < this.difficultyData.length; i++) {
+            console.log(this.difficultyData); // see what's inside the obj.
+            text.push('<li>');
+            text.push('<span style="background-color:' + this.chartColors[i] + '">' + difficultyChart.data.labels[i] + '</span>');
+            text.push('</li>');
+          }
+          text.push('</ul>');
+          return text.join("");
+        }
+      }
+    });
+
+    document.getElementById('chart-legends').innerHTML = difficultyChart.generateLegend();
+
   }
 }
 
