@@ -9,3 +9,5 @@ dist
 /server/config/local.env.js
 npm-debug.log
 coverage
+.DS_Store
+dev.sqlite

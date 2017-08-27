@@ -11,6 +11,10 @@ $fa-font-path: '/assets/fonts/font-awesome/';
  * App-wide Styles
  */
 
+body {
+  font-size:16px;
+}
+
 .browserupgrade {
   margin: 0.2em 0;
   background: #ccc;
@@ -35,3 +39,22 @@ $fa-font-path: '/assets/fonts/font-awesome/';
 @import '../components/footer/footer';
 @import '../components/modal/modal';
 /* endinject */
+
+.donutLegend li {
+  list-style: none;
+  display: inline-block;
+  margin:5px;
+}
+
+.legendLabelBox {
+  height:16px;
+  width:20px;
+  display:inline-block;
+  margin-right:5px;
+  vertical-align:middle;
+}
+
+.legendLabelText {
+  color:gray;
+  vertical-align:middle;
+}

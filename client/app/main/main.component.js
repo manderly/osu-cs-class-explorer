@@ -46,49 +46,37 @@ export class MainController {
       });
   }
 
-  legendCallback(chart) {
-    var text = [];
-    text.push('<ul>');
-    for (let i = 0; i < this.difficultyData.length; i++) {
-      console.log(this.difficultyData[i]); // see what's inside the obj.
-      text.push('<li>');
-      text.push('<span style="background-color:' + this.difficultyData[i].borderColor + '">' + this.difficultyData[i].label + '</span>');
-      text.push('</li>');
-    }
-    text.push('</ul>');
-    return text.join("");
-  }
-
+  /* Call this method when the user picks a specific course out of the select dropdown.
+     Update the user reviews and the two donut charts with specific course data. */
   displayThisCourse() {
-    //get the CS123 code
     let courseKey = this.selectedCourseName.substring(0,6).split(' ').join('');
     this.displayCourse = this.courses[courseKey];
     this.difficultyData = this.displayCourse.difficulty;
     this.timeSpentData = this.displayCourse.timeSpent;
 
+    /* build the difficulty donut chart and legend */
     const difficultyChartData = {
       labels: this.difficultyLabels,
       datasets: [{
         data: this.difficultyData,
         backgroundColor: this.chartColors
       }]
-      // These labels appear in the legend and in the tooltips when hovering different arcs
     };
 
-    const ctx = document.getElementById("donut-difficulty").getContext("2d");
-    const difficultyChart = new Chart(ctx, {
+    const ctxDifficulty = document.getElementById("donut-difficulty").getContext("2d");
+    const difficultyChart = new Chart(ctxDifficulty, {
       type: 'doughnut',
       data: difficultyChartData,
       options: {
         legendCallback: (difficultyChart) => {
-          console.log("123 using the thing that generates the legend");
+          console.log("difficulty: using the thing that generates the legend");
           var text = [];
-          text.push('<ul>');
+          text.push('<ul class="donutLegend">');
           console.log(difficultyChart);
           for (let i = 0; i < this.difficultyData.length; i++) {
             console.log(this.difficultyData); // see what's inside the obj.
             text.push('<li>');
-            text.push('<span style="background-color:' + this.chartColors[i] + '">' + difficultyChart.data.labels[i] + '</span>');
+            text.push('<span style="background-color:' + this.chartColors[i] + ';" class="legendLabelBox"></span><span class="legendLabelText">' + difficultyChart.data.labels[i] + '</span>');
             text.push('</li>');
           }
           text.push('</ul>');
@@ -97,9 +85,42 @@ export class MainController {
       }
     });
 
-    document.getElementById('chart-legends').innerHTML = difficultyChart.generateLegend();
+    /* build the time spent donut chart and legend */
+    const timeSpentChartData = {
+      labels: this.timeSpentLabels,
+      datasets: [{
+        data: this.timeSpentData,
+        backgroundColor: this.chartColors
+      }]
+      // These labels appear in the legend and in the tooltips when hovering different arcs
+    };
 
+    const ctxTimeSpent = document.getElementById("donut-timeSpent").getContext("2d");
+      const timeSpentChart = new Chart(ctxTimeSpent, {
+        type: 'doughnut',
+        data: timeSpentChartData,
+        options: {
+          legendCallback: (timeSpentChart) => {
+            console.log("time spent: using the thing that generates the legend");
+            var text = [];
+            text.push('<ul class="donutLegend">');
+            console.log(timeSpentChart);
+            for (let i = 0; i < this.timeSpentData.length; i++) {
+              console.log(this.timeSpentData); // see what's inside the obj.
+              text.push('<li>');
+              text.push('<span style="background-color:' + this.chartColors[i] + ';" class="legendLabelBox"></span><span class="legendLabelText">' + timeSpentChart.data.labels[i] + '</span>');
+              text.push('</li>');
+            }
+            text.push('</ul>');
+            return text.join("");
+          }
+        }
+      });
+
+    document.getElementById('difficulty-chart-legend').innerHTML = difficultyChart.generateLegend();
+    document.getElementById('timeSpent-chart-legend').innerHTML = timeSpentChart.generateLegend();
   }
+
 }
 
 export default angular.module('osuCsClassExplorerApp.main', [ngRoute])
