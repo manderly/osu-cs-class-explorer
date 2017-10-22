@@ -10,7 +10,9 @@ export class MainController {
   selectedCourseName = null; //course name from the select
   displayCourse = null; //course to display
 
+  //just hardcode this, rather than wait on server to generate it
   courseNames = [];
+   //courseNames = courseNames.sort();
 
   difficultyLabels = ["1 - Easy A", "2 - Mostly easy", "3 - Kinda hard", "4 - Very challenging", "5 - Prepare to be wrecked"];
   difficultyData = []; //array of 5 elements
@@ -40,11 +42,13 @@ export class MainController {
   $onInit() {
     this.$http.get('/api/things')
       .then(response => {
-        this.courses = response.data.courses;
-        this.courseNames = response.data.courseNames.sort();
-        this.reviewCount = response.data.reviewCount;
+        console.log("response should be json data ", response);
+        this.courses = response.data.courseData.courses;
+        this.reviewCount = response.data.courseData.reviewCount;
+        this.courseNames = response.data.courseData.courseNames.sort();
       });
   }
+
 
   /* Call this method when the user picks a specific course out of the select dropdown.
      Update the user reviews and the two donut charts with specific course data. */
