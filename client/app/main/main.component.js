@@ -42,7 +42,6 @@ export class MainController {
   $onInit() {
     this.$http.get('/api/things')
       .then(response => {
-        console.log("response should be json data ", response);
         this.courses = response.data.courseData.courses;
         this.reviewCount = response.data.courseData.reviewCount;
         this.courseNames = response.data.courseData.courseNames.sort();
@@ -73,12 +72,9 @@ export class MainController {
       data: difficultyChartData,
       options: {
         legendCallback: (difficultyChart) => {
-          console.log("difficulty: using the thing that generates the legend");
           var text = [];
           text.push('<ul class="donutLegend">');
-          console.log(difficultyChart);
           for (let i = 0; i < this.difficultyData.length; i++) {
-            console.log(this.difficultyData); // see what's inside the obj.
             text.push('<li>');
             text.push('<span style="background-color:' + this.chartColors[i] + ';" class="legendLabelBox"></span><span class="legendLabelText">' + difficultyChart.data.labels[i] + '</span>');
             text.push('</li>');
@@ -105,12 +101,9 @@ export class MainController {
         data: timeSpentChartData,
         options: {
           legendCallback: (timeSpentChart) => {
-            console.log("time spent: using the thing that generates the legend");
             var text = [];
             text.push('<ul class="donutLegend">');
-            console.log(timeSpentChart);
             for (let i = 0; i < this.timeSpentData.length; i++) {
-              console.log(this.timeSpentData); // see what's inside the obj.
               text.push('<li>');
               text.push('<span style="background-color:' + this.chartColors[i] + ';" class="legendLabelBox"></span><span class="legendLabelText">' + timeSpentChart.data.labels[i] + '</span>');
               text.push('</li>');
