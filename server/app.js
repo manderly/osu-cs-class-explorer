@@ -4,11 +4,21 @@
 
 'use strict';
 
+const express = require("express");
+const sqldb = require("./sqldb");
+const config = require("./config/environment");
+const http = require("http");
+const seedDatabaseIfNeeded = require("./config/seed");
+
+/*
+Heroku doesn't understand import statements and babel is not being helpful there
+
 import express from 'express';
 import sqldb from './sqldb';
 import config from './config/environment';
 import http from 'http';
 import seedDatabaseIfNeeded from './config/seed';
+*/
 
 // Setup server
 var app = express();
