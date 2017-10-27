@@ -7,12 +7,26 @@
 
 import jsonpatch from 'fast-json-patch';
 import {Thing} from '../../sqldb';
+import {buildCourseData} from '../../app';
 
-//since the course data doesn't change often, the server puts it in a json file once a day and serves from that
-//putting coursedata in the 'static' folder causes nodemon to restart every time the data is built
-//const courseData = require('../../static/coursedata.json');
+/*  These things run when the server is started.
+    Use the buildCourseData method in app.js to open spreadsheet, parse
+    the data into an organized json format, and then keep it on the server
+    so multiple users can view it.
 
-const courseData = require('../../../coursedata.json');
+    The course data is refreshed every 2 hours, or whenever the server is reset.
+*/
+
+//initial data build
+setTimeout(buildData, 5*1000);
+//and then rebuild every 2 hours
+setInterval(buildData, 7200*1000);
+let courseData;
+function buildData() {
+  buildCourseData().then((resp) => {
+    courseData = JSON.parse(resp);
+  });
+}
 
 function respondWithResult(res, statusCode) {
   statusCode = statusCode || 200;
@@ -66,7 +80,6 @@ function handleError(res, statusCode) {
 }
 
 export function index(req, res) {
-  //return contents of coursedata.json
   return res.status(200).json({courseData});
 }
 
