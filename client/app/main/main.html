@@ -1,31 +1,35 @@
 <header class="hero-unit orange" id="banner">
 
   <div class="container">
-    <h1>OSU eCampus CS Course Explorer</h1>
-    <p class="lead">{{$ctrl.reviewCount}} reviews from current and former students</p>
+    <h1>OSU CS Course Explorer</h1>
+    <div class="col-lg-12 pad-bottom">
+      <p><span class="span-block">{{$ctrl.reviewCount}}+ course reviews and survival tips from current and former students in </span><span class="span-block"><a href="http://ecampus.oregonstate.edu/online-degrees/undergraduate/computer-science/">Oregon State University's online CS degree program</a></span></p>
+    </div>
 
-    <body class="ng-cloak">
-    <form class="form-horizontal">
-      <fieldset>
-        <div class="form-group">
-          <label class="col-sm-3 control-label"></label>
-          <div class="col-sm-6">
+    <div class="col-lg-12">
+      <body class="ng-cloak">
+      <form class="form-horizontal">
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-3 control-label"></label>
+            <div class="col-sm-6">
 
-          <!-- course picker select-->
-          <ui-select ng-model="$ctrl.selectedCourseName"
-                     theme="bootstrap"
-                     on-select="$ctrl.displayThisCourse()">
-            <ui-select-match placeholder="Select or search a course ...">{{$ctrl.selectedCourseName}}</ui-select-match>
-            <ui-select-choices repeat="name in $ctrl.courseNames | filter: $select.search">
-              <div ng-bind-html="name | highlight: $select.search"></div>
-              <!-- <small ng-bind-html="item.email | highlight: $select.search"></small>-->
-            </ui-select-choices>
-          </ui-select>
+            <!-- course picker select-->
+            <ui-select ng-model="$ctrl.selectedCourseName"
+                       theme="bootstrap"
+                       on-select="$ctrl.displayThisCourse()">
+              <ui-select-match placeholder="Select or search a course ...">{{$ctrl.selectedCourseName}}</ui-select-match>
+              <ui-select-choices repeat="name in $ctrl.courseNames | filter: $select.search">
+                <div ng-bind-html="name | highlight: $select.search"></div>
+                <!-- <small ng-bind-html="item.email | highlight: $select.search"></small>-->
+              </ui-select-choices>
+            </ui-select>
+            </div>
           </div>
-        </div>
-        </fieldset>
-      </form>
-    </body>
+          </fieldset>
+        </form>
+      </body>
+    </div>
 
   </div><!-- closes container-->
 </header>
@@ -47,17 +51,19 @@
     <!-- Difficulty and hours spent (left side in full screen) -->
     <div class="col-md-5">
       <!-- Difficulty donut and legend-->
-      <h2>Difficulty scores</h2>
-      <p>On a 1-5 scale, where 1 is "anyone can get an A" and 5 is "prepare to be wrecked by this course". Each section represents a percentage of students who responded with a particular score rating for this course.</p>
-      <div class="col-md-12">
-        <canvas id="donut-difficulty"
-                class="chart">
-        </canvas>
-        <div id="difficulty-chart-legend"></div>
+      <div class="pad-bottom">
+        <h2>Difficulty scores</h2>
+        <p>On a 1-5 scale, where 1 is "anyone can get an A" and 5 is "prepare to be wrecked by this course". Each section represents a percentage of students who responded with a particular score rating for this course.</p>
+        <div class="col-md-12">
+          <canvas id="donut-difficulty"
+                  class="chart">
+          </canvas>
+          <div id="difficulty-chart-legend"></div>
+        </div>
       </div>
 
       <!-- Time spent donut and legend -->
-      <div>
+      <div class="pad-bottom">
         <h2>Time spent per week</h2>
         <p>Each section of the chart represents a percentage of student responses re: hours spent on class per week.</p>
         <div class="col-md-12">
