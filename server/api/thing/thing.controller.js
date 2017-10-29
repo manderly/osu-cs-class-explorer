@@ -19,8 +19,8 @@ import {buildCourseData} from '../../app';
 
 //initial data build
 setTimeout(buildData, 5 * 1000);
-//and then rebuild every 2 hours
-setInterval(buildData, 7200 * 1000);
+//and then rebuild every 6 hours
+setInterval(buildData, 21600 * 1000);
 let courseData;
 function buildData() {
   buildCourseData().then((resp) => {
