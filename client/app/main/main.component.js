@@ -1,7 +1,7 @@
 import angular from 'angular';
 const ngRoute = require('angular-route');
 import routing from './main.routes';
-import moment from 'moment';
+var moment = require('moment');
 
 export class MainController {
 
