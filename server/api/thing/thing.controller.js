@@ -14,7 +14,7 @@ import {buildCourseData} from '../../app';
     the data into an organized json format, and then keep it on the server
     so multiple users can view it.
 
-    The course data is refreshed every 2 hours, or whenever the server is reset.
+    The course data is refreshed every 6 hours, or whenever the server is reset.
 */
 
 //initial data build

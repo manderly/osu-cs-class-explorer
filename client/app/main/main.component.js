@@ -45,8 +45,9 @@ export class MainController {
         this.courses = response.data.courseData.courses;
         this.reviewCount = response.data.courseData.reviewCount;
         this.courseNames = response.data.courseData.courseNames.sort();
+        this.lastBuilt = response.data.courseData.lastBuilt;
       });
-  }
+    }
 
 
   /* Call this method when the user picks a specific course out of the select dropdown.
