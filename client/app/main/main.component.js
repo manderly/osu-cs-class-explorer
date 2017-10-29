@@ -1,6 +1,7 @@
 import angular from 'angular';
 const ngRoute = require('angular-route');
 import routing from './main.routes';
+import moment from 'moment';
 
 export class MainController {
 
@@ -45,7 +46,8 @@ export class MainController {
         this.courses = response.data.courseData.courses;
         this.reviewCount = response.data.courseData.reviewCount;
         this.courseNames = response.data.courseData.courseNames.sort();
-        this.lastBuilt = response.data.courseData.lastBuilt;
+        //make the timestamp local to the user's timezone, rather than UTC 
+        this.lastBuilt = moment(response.data.courseData.lastBuilt).local().format('LLLL');
       });
     }
 
