@@ -9,6 +9,7 @@ import sqldb from './sqldb';
 import config from './config/environment';
 import http from 'http';
 import seedDatabaseIfNeeded from './config/seed';
+import {summaries} from './static/descriptions';
 
 // Setup server
 var app = express();
@@ -73,6 +74,9 @@ export function buildCourseData() {
     underscore.each(rawData, ((course) => {
       //use the course name as a key, like "CS162"
       key = course['whatCourseDidYouTake?'].substring(0, 6).split(' ').join('');
+      //ecmascript 6 destructuring protects against empty data coming back
+      const summary = summaries[key] || {};
+      const {description = '', proctoredTests = '', book = '', bookLink = '', prereqs = ''} = summary;
       //if this class isn't in the data object yet, add it
       if (!courses[key]) {
         courseNames.push(course['whatCourseDidYouTake?']);
@@ -81,7 +85,12 @@ export function buildCourseData() {
           fullName: course['whatCourseDidYouTake?'],
           tips: [],
           difficulty: [0, 0, 0, 0, 0],
-          timeSpent: [0, 0, 0, 0]
+          timeSpent: [0, 0, 0, 0],
+          description,
+          proctoredTests,
+          book,
+          bookLink,
+          prereqs,
         };
       }
 
