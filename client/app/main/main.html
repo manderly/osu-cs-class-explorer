@@ -44,46 +44,47 @@
 </div>
 
 <div class="container col-lg-12" ng-show="$ctrl.selectedCourseName">
-    <div class="col-md-12">
-      <h1>{{$ctrl.displayCourse.fullName}}</h1>
-    </div>
 
-    <!-- Difficulty and hours spent (left side in full screen) -->
-    <div class="col-md-5">
-      <!-- Difficulty donut and legend-->
-      <div class="pad-bottom">
-        <h2>Difficulty scores</h2>
-        <p>On a 1-5 scale, where 1 is "anyone can get an A" and 5 is "prepare to be wrecked by this course". Each section represents a percentage of students who responded with a particular score rating for this course.</p>
-        <div class="col-md-12">
-          <canvas id="donut-difficulty"
-                  class="chart">
-          </canvas>
-          <div id="difficulty-chart-legend"></div>
-        </div>
-      </div>
+  <div class="col-md-12">
+    <h1>{{$ctrl.displayCourse.fullName}}</h1>
+  </div>
 
-      <!-- Time spent donut and legend -->
-      <div class="pad-bottom">
-        <h2>Time spent per week</h2>
-        <p>Each section of the chart represents a percentage of student responses re: hours spent on class per week.</p>
-        <div class="col-md-12">
-          <canvas id="donut-timeSpent"
-                  class="chart">
-          </canvas>
-          <div id="timeSpent-chart-legend"></div>
-        </div>
+  <!-- Difficulty and hours spent (left side in full screen) -->
+  <div class="col-md-5">
+    <!-- Difficulty donut and legend-->
+    <div class="pad-bottom">
+      <h2>Difficulty scores</h2>
+      <p>On a 1-5 scale, where 1 is "anyone can get an A" and 5 is "prepare to be wrecked by this course". Each section represents a percentage of students who responded with a particular score rating for this course.</p>
+      <div class="col-md-12">
+        <canvas id="donut-difficulty"
+                class="chart">
+        </canvas>
+        <div id="difficulty-chart-legend"></div>
       </div>
     </div>
 
-    <!-- tips -->
-    <div class="col-md-7">
-      <h2>Tips from other students</h2>
-      <ul class="nav nav-tabs nav-stacked col-md-12 col-lg-12 col-sm-12 well"
-          ng-repeat="tip in $ctrl.displayCourse.tips track by $index">
-        <li>"{{tip.tip}}"<br/><span class="pull-right"><i>{{tip.timestamp}}</i></span></li>
-      </ul>
-      <p>Thanks, <a href="https://www.reddit.com/r/OSUOnlineCS">/r/OSUOnlineCS</a>, for collecting this data and sharing it publicly.</p>
+    <!-- Time spent donut and legend -->
+    <div class="pad-bottom">
+      <h2>Time spent per week</h2>
+      <p>Each section of the chart represents a percentage of student responses re: hours spent on class per week.</p>
+      <div class="col-md-12">
+        <canvas id="donut-timeSpent"
+                class="chart">
+        </canvas>
+        <div id="timeSpent-chart-legend"></div>
+      </div>
     </div>
+  </div>
+
+  <!-- tips -->
+  <div class="col-md-7">
+    <h2>Tips from other students</h2>
+    <ul class="nav nav-tabs nav-stacked col-md-12 col-lg-12 col-sm-12 well"
+        ng-repeat="tip in $ctrl.displayCourse.tips track by $index">
+      <li>"{{tip.tip}}"<br/><span class="pull-right"><i>{{tip.timestamp}}</i></span></li>
+    </ul>
+    <p>Thanks, <a href="https://www.reddit.com/r/OSUOnlineCS">/r/OSUOnlineCS</a>, for collecting this data and sharing it publicly.</p>
+  </div>
 </div>
 
 <div class="container col-lg-12 pad-top">
