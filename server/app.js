@@ -74,15 +74,31 @@ export function buildCourseData() {
     underscore.each(rawData, ((course) => {
       //use the course name as a key, like "CS162"
       key = course['whatCourseDidYouTake?'].substring(0, 6).split(' ').join('');
+
+      //handle the 419 to 467 course number change
+      if (key == 'CS419') {
+        key = 'CS467';
+      }
+
       //ecmascript 6 destructuring protects against empty data coming back
       const summary = summaries[key] || {};
       const {description = '', proctoredTests = '', book = '', bookLink = '', prereqs = ''} = summary;
+
       //if this class isn't in the data object yet, add it
       if (!courses[key]) {
-        courseNames.push(course['whatCourseDidYouTake?']);
+        let courseName = course['whatCourseDidYouTake?'];
+
+        //handle the 419 to 467 change of number and name
+        if (courseName == "CS 419 - Software Projects") {
+          courseName = "CS 467 - Online Capstone Project";
+        }
+
+        //push courseName into courseNames array
+        courseNames.push(courseName);
+
         //make an empty object for this key
         courses[key] = {
-          fullName: course['whatCourseDidYouTake?'],
+          fullName: courseName,
           tips: [],
           difficulty: [0, 0, 0, 0, 0],
           timeSpent: [0, 0, 0, 0],

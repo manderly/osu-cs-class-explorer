@@ -50,7 +50,7 @@
     <p>{{$ctrl.displayCourse.description}}</p>
     <p class="small"><b>Pre-requisite courses:</b> {{$ctrl.displayCourse.prereqs}}</p>
     <p class="small"><b>Proctored exams:</b> {{$ctrl.displayCourse.proctoredTests}}</p>
-    <p ng-show="$ctrl.displayCourse.book" class="small"><b>Textbook:</b><a href="{{$ctrl.displayCourse.bookLink}}"> {{$ctrl.displayCourse.book}}</a></p>
+    <p ng-show="$ctrl.displayCourse.book" class="small"><b>Textbook: </b><a href="{{$ctrl.displayCourse.bookLink}}">{{$ctrl.displayCourse.book}}</a></p>
   </div>
   <!-- Difficulty and hours spent (left side in full screen) -->
   <div class="col-md-5">
@@ -95,12 +95,14 @@
   <div class="col-lg-8">
     <h2>About this project</h2>
     <b>OSU CS Course Explorer</b> was developed for students of Oregon State University's online Computer Science program.
-    Course descriptions are from <a href="http://ecampus.oregonstate.edu/soc/ecatalog/ecourselist.htm?termcode=all&subject=CS">OSU's official course list</a> and the tips, difficulty, and time spent are <a href="https://docs.google.com/spreadsheets/d/1MFBGJbOXVjtThgj5b6K0rv9xdsC1M2GQ0pJVB-8YCeU/edit">scraped from this spreadsheet</a> and are written by real students on the <a href="https://www.reddit.com/r/OSUOnlineCS/">OSUOnlineCS subreddit</a>. The course review data in this app is as useful as students like you make it. Add your own <a href="https://docs.google.com/forms/d/e/1FAIpQLSeAWZa_OWYqwOte5yw4loGgE6hEUqOJOeSpmzStZF_HcufufQ/viewform">course review(s) via the survey here</a>.
+    Course descriptions and book links are from <a href="http://ecampus.oregonstate.edu/soc/ecatalog/ecourselist.htm?termcode=all&subject=CS">OSU's official course list</a>. Always check your syllabus to confirm the current course book.
     <br/><br/>
-    App developed by <a href="http://tilcode.com">Mandi Grant</a>, OSU CS student and professional web developer.
+    Tips, difficulty scores, and time spent are <a href="https://docs.google.com/spreadsheets/d/1MFBGJbOXVjtThgj5b6K0rv9xdsC1M2GQ0pJVB-8YCeU/edit">scraped from this spreadsheet</a> and are written by real students on the <a href="https://www.reddit.com/r/OSUOnlineCS/">OSUOnlineCS subreddit</a>. Add your own <a href="https://docs.google.com/forms/d/e/1FAIpQLSeAWZa_OWYqwOte5yw4loGgE6hEUqOJOeSpmzStZF_HcufufQ/viewform">course review(s) via the survey here</a>. The course review data in this app is as useful as students like you make it.
+    <br/><br/>
+    App developed by <a href="http://tilcode.com">Mandi Grant</a>, OSU CS student and web developer.
     Explore the <a href="https://github.com/MJGrant/osu-cs-class-explorer">project code</a> on my <a href="https://github.com/MJGrant">GitHub</a> and connect with me on <a href="https://www.linkedin.com/in/majoh/">LinkedIn</a>.
     <br/><br/>
-    Help me improve this app by <a href="https://github.com/MJGrant/osu-cs-class-explorer">opening a pull request</a>!
+    You can help improve this app by <a href="https://github.com/MJGrant/osu-cs-class-explorer">opening a pull request</a>!
     <br/><br/>
     <div class="col-md-12 last-built">
       <p class="pull-right"><small>Data last refreshed: {{$ctrl.lastBuilt}}</small></p>

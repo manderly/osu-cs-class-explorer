@@ -101,8 +101,8 @@ export const summaries = {
             bookLink: '',
             prereqs: 'CS261 or CS361'
           },
-  'CS467':{ description: 'Real-world team-based experience with the software engineering design and delivery cycle, including requirements analysis and specification, design techniques, and requirements and final project written documentation.',
-            proctoredTests: 'Yes',
+  'CS467':{ description: 'Taken the last quarter before graduation. This course offers real-world team-based experience with the software engineering design and delivery cycle, including requirements analysis and specification, design techniques, and requirements and final project written documentation. In a group of 3, students spend the quarter creating a single project. (Formerly CS419) ',
+            proctoredTests: 'No',
             book:'',
             bookLink: '',
             prereqs: 'CS361'
