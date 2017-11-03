@@ -11,9 +11,12 @@ export class MainController {
   selectedCourseName = null; //course name from the select
   displayCourse = null; //course to display
 
-  //just hardcode this, rather than wait on server to generate it
   courseNames = [];
-   //courseNames = courseNames.sort();
+
+  //chart stuff
+  difficultyChart;
+  timeSpentChart;
+
 
   difficultyLabels = ["1 - Easy A", "2 - Mostly easy", "3 - Kinda hard", "4 - Very challenging", "5 - Prepare to be wrecked"];
   difficultyData = []; //array of 5 elements
@@ -60,6 +63,15 @@ export class MainController {
     this.difficultyData = this.displayCourse.difficulty;
     this.timeSpentData = this.displayCourse.timeSpent;
 
+    /* Wipe any old charts off the canvas */
+    if (this.difficultyChart) {
+      this.difficultyChart.destroy();
+    }
+
+    if (this.timeSpentChart) {
+      this.timeSpentChart.destroy();
+    }
+
     /* build the difficulty donut chart and legend */
     const difficultyChartData = {
       labels: this.difficultyLabels,
@@ -69,8 +81,10 @@ export class MainController {
       }]
     };
 
+    //Difficulty donut chart
     const ctxDifficulty = document.getElementById("donut-difficulty").getContext("2d");
-    const difficultyChart = new Chart(ctxDifficulty, {
+
+    this.difficultyChart = new Chart(ctxDifficulty, {
       type: 'doughnut',
       data: difficultyChartData,
       options: {
@@ -99,7 +113,7 @@ export class MainController {
     };
 
     const ctxTimeSpent = document.getElementById("donut-timeSpent").getContext("2d");
-      const timeSpentChart = new Chart(ctxTimeSpent, {
+      this.timeSpentChart = new Chart(ctxTimeSpent, {
         type: 'doughnut',
         data: timeSpentChartData,
         options: {
@@ -117,8 +131,8 @@ export class MainController {
         }
       });
 
-    document.getElementById('difficulty-chart-legend').innerHTML = difficultyChart.generateLegend();
-    document.getElementById('timeSpent-chart-legend').innerHTML = timeSpentChart.generateLegend();
+    document.getElementById('difficulty-chart-legend').innerHTML = this.difficultyChart.generateLegend();
+    document.getElementById('timeSpent-chart-legend').innerHTML = this.timeSpentChart.generateLegend();
   }
 
 }
