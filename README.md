@@ -7,7 +7,7 @@ The [OSU eCampus subreddit](https://www.reddit.com/r/OSUOnlineCS/) collects cour
 This project was generated with the [Angular Full-Stack Generator](https://github.com/DaftMonk/generator-angular-fullstack) version 4.2.2.
 
 
-![OSU Course Explorer - August 2017](screenshots/osu-course-explorer_august_2017.png "Screenshot of app taken August 2017")
+![OSU Course Explorer - November 2017](screenshots/osu-cs-course-explorer-november-2017.png "Screenshot of app taken November 2017")
 
 # Development
 
@@ -16,7 +16,6 @@ This project was generated with the [Angular Full-Stack Generator](https://githu
 - [Git](https://git-scm.com/)
 - [Node.js and npm](nodejs.org) Node >= 4.x.x, npm >= 2.x.x
 - [Gulp](http://gulpjs.com/) (`npm install --global gulp`)
-- [SQLite](https://www.sqlite.org/quickstart.html)
 
 ### Developing
 
@@ -27,6 +26,8 @@ This project was generated with the [Angular Full-Stack Generator](https://githu
 ## Build & development
 
 Run `gulp build` for building and `gulp serve` for preview on localhost:3000
+
+Run `gulp buildcontrol:heroku to deploy to Heroku`
 
 ## Testing
 
