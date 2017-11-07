@@ -103,6 +103,12 @@ footer {
   text-align:center;
 }
 
+.ui-select-match-text {
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 @media screen and (max-width: 600px) {
   .hide-on-mobile {
     visibility: hidden;
