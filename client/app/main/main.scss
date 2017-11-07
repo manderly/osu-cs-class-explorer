@@ -97,3 +97,15 @@ footer {
 .test {
   border: solid red 1px;
 }
+
+.banner {
+  display:block;
+  text-align:center;
+}
+
+@media screen and (max-width: 600px) {
+  .hide-on-mobile {
+    visibility: hidden;
+    display: none;
+  }
+}
