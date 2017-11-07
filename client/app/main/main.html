@@ -50,7 +50,14 @@
     <p>{{$ctrl.displayCourse.description}}</p>
     <p class="small"><b>Pre-requisite courses:</b> {{$ctrl.displayCourse.prereqs}}</p>
     <p class="small"><b>Proctored exams:</b> {{$ctrl.displayCourse.proctoredTests}}</p>
-    <p ng-show="$ctrl.displayCourse.book" class="small"><b>Textbook: </b><a href="{{$ctrl.displayCourse.bookLink}}">{{$ctrl.displayCourse.book}}</a></p>
+    <p class="small"><b>Textbook: </b>
+      <span ng-show="$ctrl.displayCourse.book">
+        <a href="{{$ctrl.displayCourse.bookLink}}">{{$ctrl.displayCourse.book}}</a>
+      </span>
+      <span ng-hide="$ctrl.displayCourse.book">
+        Course materials
+      </span>
+    </p>
   </div>
   <!-- Difficulty and hours spent (left side in full screen) -->
   <div class="col-md-5">
