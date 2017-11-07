@@ -49,7 +49,7 @@ export class MainController {
         this.courses = response.data.courseData.courses;
         this.reviewCount = response.data.courseData.reviewCount;
         this.courseNames = response.data.courseData.courseNames.sort();
-        //make the timestamp local to the user's timezone, rather than UTC
+        //format the timestamp and make it local to the user's timezone, rather than UTC
         this.lastBuilt = moment.utc(response.data.courseData.lastBuilt).local().format('LLLL');
       });
     }

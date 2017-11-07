@@ -146,7 +146,7 @@ export function buildCourseData() {
       }
     }));
 
-    var lastBuiltTimestamp = moment().format('LLLL');
+    var lastBuiltTimestamp = moment();
 
     let appData = {
       courses,
