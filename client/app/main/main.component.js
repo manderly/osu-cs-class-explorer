@@ -46,14 +46,17 @@ export class MainController {
   $onInit() {
     this.$http.get('/api/things')
       .then(response => {
+        console.log("response came to front end as:", response.data);
         this.courses = response.data.courseData.courses;
         this.reviewCount = response.data.courseData.reviewCount;
         this.courseNames = response.data.courseData.courseNames.sort();
         //make the timestamp local to the user's timezone, rather than UTC
         this.lastBuilt = moment.utc(response.data.courseData.lastBuilt).local().format('LLLL');
-      });
-    }
-
+      })
+      .catch(response => {
+        console.log("data not built yet");
+      })
+  }
 
   /* Call this method when the user picks a specific course out of the select dropdown.
      Update the user reviews and the two donut charts with specific course data. */

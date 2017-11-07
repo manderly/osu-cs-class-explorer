@@ -14,17 +14,19 @@ import {buildCourseData} from '../../app';
     the data into an organized json format, and then keep it on the server
     so multiple users can view it.
 
-    The course data is refreshed every 6 hours, or whenever the server is reset.
+    The course data is refreshed every 12 hours, or whenever the server is reset.
 */
 
-//initial data build
+//initial data build on server startup
 setTimeout(buildData, 5 * 1000);
-//and then rebuild every 12 hours
-setInterval(buildData, 43200 * 1000);
-let courseData;
+//and then rebuild every 12 hours 43200 * 1000
+setInterval(buildData, 120 * 1000);
+
 function buildData() {
-  buildCourseData().then((resp) => {
-    courseData = JSON.parse(resp);
+  return buildCourseData()
+    .then((resp) => {
+      console.log("built the course data, returning it now");
+      return resp;
   });
 }
 
@@ -80,7 +82,13 @@ function handleError(res, statusCode) {
 }
 
 export function index(req, res) {
-  return res.status(200).json({courseData});
+  //if the data is unbuilt, trigger a build of the data
+  return buildCourseData()
+    .then((data) => {
+      //front end expects the name courseData
+      let courseData = JSON.parse(data);
+      return res.status(200).json({courseData});
+    });
 }
 
 
