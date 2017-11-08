@@ -6,7 +6,6 @@
 'use strict';
 
 import jsonpatch from 'fast-json-patch';
-import {Thing} from '../../sqldb';
 import {buildCourseData} from '../../app';
 
 /*  These things run when the server is started.

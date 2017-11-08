@@ -5,10 +5,8 @@
 'use strict';
 
 import express from 'express';
-import sqldb from './sqldb';
 import config from './config/environment';
 import http from 'http';
-import seedDatabaseIfNeeded from './config/seed';
 import {summaries} from './static/descriptions';
 
 // Setup server
@@ -32,12 +30,7 @@ function startServer() {
   });
 }
 
-sqldb.sequelize.sync()
-  .then(seedDatabaseIfNeeded)
-  .then(startServer)
-  .catch(function(err) {
-    console.log('Server failed to start due to error: %s', err);
-  });
+startServer();
 
 var credsJson = {
   client_email: 'osu-class-explorer@api-project-700272715173.iam.gserviceaccount.com',
