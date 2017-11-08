@@ -5,7 +5,6 @@ var moment = require('moment');
 
 export class MainController {
 
-  awesomeThings = [];
   courses = {};
   reviewCount = 0;
   selectedCourseName = null; //course name from the select
@@ -44,7 +43,7 @@ export class MainController {
   }
 
   $onInit() {
-    this.$http.get('/api/things')
+    this.$http.get('/api/data')
       .then(response => {
         this.courses = response.data.courseData.courses;
         this.reviewCount = response.data.courseData.reviewCount;

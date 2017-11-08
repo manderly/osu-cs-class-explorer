@@ -50,7 +50,7 @@ function dataDoneCallback() {
 }
 
 /* Get the spreadsheet from Google and parse it into a JSON object organized
-by course name. Return the result. This method is called by thing.controller.js.
+by course name. Return the result. This method is called by data.controller.js.
 */
 export function buildCourseData() {
   console.log('Building course data at', moment().format('LLLL'));

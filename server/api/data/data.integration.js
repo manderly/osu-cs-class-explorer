@@ -8,12 +8,12 @@ import request from 'supertest';
 var newThing;
 
 describe('Thing API:', function() {
-  describe('GET /api/things', function() {
+  describe('GET /api/data', function() {
     var things;
 
     beforeEach(function(done) {
       request(app)
-        .get('/api/things')
+        .get('/api/data')
         .expect(200)
         .expect('Content-Type', /json/)
         .end((err, res) => {

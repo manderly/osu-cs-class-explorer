@@ -4,8 +4,8 @@
 
 var proxyquire = require('proxyquire').noPreserveCache();
 
-var thingCtrlStub = {
-  index: 'thingCtrl.index',
+var dataCtrlStub = {
+  index: 'dataCtrl.index',
 };
 
 var routerStub = {
@@ -13,24 +13,24 @@ var routerStub = {
 };
 
 // require the index with our stubbed out modules
-var thingIndex = proxyquire('./index.js', {
+var dataIndex = proxyquire('./index.js', {
   express: {
     Router() {
       return routerStub;
     }
   },
-  './thing.controller': thingCtrlStub
+  './data.controller': dataCtrlStub
 });
 
-describe('Thing API Router:', function() {
+describe('Data API Router:', function() {
   it('should return an express router instance', function() {
-    expect(thingIndex).to.equal(routerStub);
+    expect(dataIndex).to.equal(routerStub);
   });
 
-  describe('GET /api/things', function() {
-    it('should route to thing.controller.index', function() {
+  describe('GET /api/data', function() {
+    it('should route to data.controller.index', function() {
       expect(routerStub.get
-        .withArgs('/', 'thingCtrl.index')
+        .withArgs('/', 'dataCtrl.index')
         ).to.have.been.calledOnce;
     });
   });
