@@ -5,11 +5,11 @@
 var app = require('../..');
 import request from 'supertest';
 
-var newThing;
+var newData;
 
-describe('Thing API:', function() {
+describe('Data API:', function() {
   describe('GET /api/data', function() {
-    var things;
+    var data;
 
     beforeEach(function(done) {
       request(app)
@@ -20,13 +20,13 @@ describe('Thing API:', function() {
           if(err) {
             return done(err);
           }
-          things = res.body;
+          data = res.body;
           done();
         });
     });
 
-    it('should respond with JSON array', function() {
-      expect(things).to.be.instanceOf(Array);
+    it('should respond with JSON data', function() {
+      expect(data).to.be.instanceOf(Object);
     });
   });
 });
