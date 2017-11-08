@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 export const summaries = {
   CS161: { description: 'Overview of fundamental concepts of computer science. Introduction to problem solving, software engineering, and object-oriented programming. Includes algorithm design and program development. Students write small programs in C++.',
             proctoredTests: 'Yes',
@@ -120,3 +121,4 @@ export const summaries = {
             prereqs: 'CS344'
           }
 };
+/* eslint-enable max-len */

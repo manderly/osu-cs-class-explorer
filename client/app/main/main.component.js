@@ -17,14 +17,14 @@ export class MainController {
   timeSpentChart;
 
 
-  difficultyLabels = ["1 - Easy A", "2 - Mostly easy", "3 - Kinda hard", "4 - Very challenging", "5 - Prepare to be wrecked"];
+  difficultyLabels = ['1 - Easy A', '2 - Mostly easy', '3 - Kinda hard', '4 - Very challenging', '5 - Prepare to be wrecked'];
   difficultyData = []; //array of 5 elements
 
-  timeSpentLabels = ["0-5 hours", "6-12 hours", "13-18 hours", "18+ hours"];
+  timeSpentLabels = ['0-5 hours', '6-12 hours', '13-18 hours', '18+ hours'];
   timeSpentData = []; //array of 4 elements
 
   //light to dark orange tones
-  chartColors = [ '#fedbcd', '#fdb89b', '#fa7138', '#dc4405', '#641f02'];
+  chartColors = ['#fedbcd', '#fdb89b', '#fa7138', '#dc4405', '#641f02'];
   chartOptions = {
     cutoutPercentage: 40,
     legend: {
@@ -57,7 +57,8 @@ export class MainController {
   /* Call this method when the user picks a specific course out of the select dropdown.
      Update the user reviews and the two donut charts with specific course data. */
   displayThisCourse() {
-    let courseKey = this.selectedCourseName.substring(0,6).split(' ').join('');
+    let courseKey = this.selectedCourseName.substring(0, 6).split(' ')
+      .join('');
     this.displayCourse = this.courses[courseKey];
     this.difficultyData = this.displayCourse.difficulty;
     this.timeSpentData = this.displayCourse.timeSpent;
@@ -81,13 +82,14 @@ export class MainController {
     };
 
     //Difficulty donut chart
+    /* eslint-disable quotes */
     const ctxDifficulty = document.getElementById("donut-difficulty").getContext("2d");
 
     this.difficultyChart = new Chart(ctxDifficulty, {
       type: 'doughnut',
       data: difficultyChartData,
       options: {
-        legendCallback: (difficultyChart) => {
+        legendCallback: difficultyChart => {
           var text = [];
           text.push('<ul class="donutLegend">');
           for (let i = 0; i < this.difficultyData.length; i++) {
@@ -100,6 +102,7 @@ export class MainController {
         }
       }
     });
+    /* eslint-enable quotes */
 
     /* build the time spent donut chart and legend */
     const timeSpentChartData = {
@@ -111,12 +114,13 @@ export class MainController {
       // These labels appear in the legend and in the tooltips when hovering different arcs
     };
 
+    /* eslint-enable quotes */
     const ctxTimeSpent = document.getElementById("donut-timeSpent").getContext("2d");
       this.timeSpentChart = new Chart(ctxTimeSpent, {
         type: 'doughnut',
         data: timeSpentChartData,
         options: {
-          legendCallback: (timeSpentChart) => {
+          legendCallback: timeSpentChart => {
             var text = [];
             text.push('<ul class="donutLegend">');
             for (let i = 0; i < this.timeSpentData.length; i++) {
@@ -129,6 +133,7 @@ export class MainController {
           }
         }
       });
+      /* eslint-disable quotes */
 
     document.getElementById('difficulty-chart-legend').innerHTML = this.difficultyChart.generateLegend();
     document.getElementById('timeSpent-chart-legend').innerHTML = this.timeSpentChart.generateLegend();
