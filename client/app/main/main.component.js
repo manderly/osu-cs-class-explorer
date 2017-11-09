@@ -49,9 +49,10 @@ export class MainController {
         this.reviewCount = response.data.courseData.reviewCount;
         this.courseNames = response.data.courseData.courseNames.sort();
         //format the timestamp and make it local to the user's timezone, rather than UTC
-        this.lastBuilt = moment.utc(response.data.courseData.lastBuilt).local().format('LLLL');
+        this.lastBuilt = moment.utc(response.data.courseData.lastBuilt).local()
+          .format('LLLL');
       });
-    }
+  }
 
 
   /* Call this method when the user picks a specific course out of the select dropdown.
@@ -82,10 +83,9 @@ export class MainController {
     };
 
     //Difficulty donut chart
-    /* eslint-disable quotes */
-    const ctxDifficulty = document.getElementById("donut-difficulty").getContext("2d");
+    const ctxDifficulty = document.getElementById('donut-difficulty').getContext('2d');
 
-    this.difficultyChart = new Chart(ctxDifficulty, {
+    this.difficultyChart = new Chart(ctxDifficulty, { // eslint-disable-line no-undef
       type: 'doughnut',
       data: difficultyChartData,
       options: {
@@ -98,11 +98,10 @@ export class MainController {
             text.push('</li>');
           }
           text.push('</ul>');
-          return text.join("");
+          return text.join('');
         }
       }
     });
-    /* eslint-enable quotes */
 
     /* build the time spent donut chart and legend */
     const timeSpentChartData = {
@@ -115,25 +114,25 @@ export class MainController {
     };
 
     /* eslint-enable quotes */
-    const ctxTimeSpent = document.getElementById("donut-timeSpent").getContext("2d");
-      this.timeSpentChart = new Chart(ctxTimeSpent, {
-        type: 'doughnut',
-        data: timeSpentChartData,
-        options: {
-          legendCallback: timeSpentChart => {
-            var text = [];
-            text.push('<ul class="donutLegend">');
-            for (let i = 0; i < this.timeSpentData.length; i++) {
-              text.push('<li>');
-              text.push('<span style="background-color:' + this.chartColors[i] + ';" class="legendLabelBox"></span><span class="legendLabelText">' + timeSpentChart.data.labels[i] + '</span>');
-              text.push('</li>');
-            }
-            text.push('</ul>');
-            return text.join("");
+    const ctxTimeSpent = document.getElementById('donut-timeSpent').getContext('2d');
+    this.timeSpentChart = new Chart(ctxTimeSpent, { // eslint-disable-line no-undef
+      type: 'doughnut',
+      data: timeSpentChartData,
+      options: {
+        legendCallback: timeSpentChart => {
+          var text = [];
+          text.push('<ul class="donutLegend">');
+          for (let i = 0; i < this.timeSpentData.length; i++) {
+            text.push('<li>');
+            text.push('<span style="background-color:' + this.chartColors[i] + ';" class="legendLabelBox"></span><span class="legendLabelText">' + timeSpentChart.data.labels[i] + '</span>');
+            text.push('</li>');
           }
+          text.push('</ul>');
+          return text.join('');
         }
-      });
-      /* eslint-disable quotes */
+      }
+    });
+    /* eslint-disable quotes */
 
     document.getElementById('difficulty-chart-legend').innerHTML = this.difficultyChart.generateLegend();
     document.getElementById('timeSpent-chart-legend').innerHTML = this.timeSpentChart.generateLegend();
