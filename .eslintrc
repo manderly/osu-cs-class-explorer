@@ -155,12 +155,6 @@
         "keyword-spacing": [2, {
             "before": true,
             "after": true,
-            "overrides": {
-                "if": {"after": false},
-                "for": {"after": false},
-                "while": {"after": false},
-                "catch": {"after": false}
-            }
         }],                                                         //enforce spacing before and after keywords
         "linebreak-style": 2,                                       //disallow mixed 'LF' and 'CRLF' as linebreaks
         "lines-around-comment": 0,                                  //enforce empty lines around comments
