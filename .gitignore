@@ -10,4 +10,4 @@ dist
 npm-debug.log
 coverage
 .DS_Store
-dev.sqlite
+*.sqlite
