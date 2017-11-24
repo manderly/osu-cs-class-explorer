@@ -1,4 +1,4 @@
-# osu-cs-class-explorer
+# OSU CS Course Explorer
 
 Wondering how hard your next class might be? Did other students think CS162 was a bloodbath, too? This app can tell you!
 
@@ -15,20 +15,18 @@ This project was generated with the [Angular Full-Stack Generator](https://githu
 
 - [Git](https://git-scm.com/)
 - [Node.js and npm](nodejs.org) Node >= 4.x.x, npm >= 2.x.x
-- [Gulp](http://gulpjs.com/) (`npm install --global gulp`)
+- [Gulp](http://gulpjs.com/) (`npm install --global gulp-cli`)
 
-### Developing
+## Building & Running
 
-1. Run `npm install` to install server dependencies.
+Run `npm install` to install server dependencies.
 
-2. Run `gulp serve` to start the development server. It should automatically open the client in your browser when ready.
+Run `gulp build` for building and `gulp serve` for preview on localhost:3000.
 
-## Build & development
-
-Run `gulp build` for building and `gulp serve` for preview on localhost:3000
-
-Run `gulp buildcontrol:heroku to deploy to Heroku`
+Run `gulp buildcontrol:heroku` to deploy to Heroku.
 
 ## Testing
 
-Running `npm test` will run the unit tests with karma.
+Run `npm test` to run the unit tests with karma.
+
+&copy; 2017 Mandi Grant
