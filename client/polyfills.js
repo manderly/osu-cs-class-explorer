@@ -12,11 +12,11 @@ import 'core-js/es7/reflect';
 // require('zone.js/dist/zone');
 
 
-if(!ENV) {
+if (!ENV) {
   var ENV = 'development';
 }
 
-if(ENV === 'production') {
+if (ENV === 'production') {
   // Production
 } else {
   // Development

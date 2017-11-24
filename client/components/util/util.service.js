@@ -30,7 +30,7 @@ export function UtilService($window) {
       a.href = url;
 
       // Special treatment for IE, see http://stackoverflow.com/a/13405933 for details
-      if(a.host === '') {
+      if (a.host === '') {
         a.href = a.href;
       }
 
