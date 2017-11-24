@@ -76,7 +76,7 @@ describe('Component: MainComponent', function() {
       //this test catches if something goes wrong with that formatting
       mainComponent.$onInit();
       $httpBackend.flush();
-      expect(mainComponent.lastBuilt).to.equal("Wednesday, November 8, 2017 8:48 AM");
+      expect(mainComponent.lastBuilt).to.match(/[A-Za-z]*, [A-Za-z]* \d{1,2}, \d{4} \d{1,2}:\d\d [AP]M/);
     });
 
 });
