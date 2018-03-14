@@ -106,13 +106,13 @@ export const summaries = {
             proctoredTests: 'No',
             book: '',
             bookLink: '',
-            prereqs: 'CS361'
+            prereqs: 'CS344, CS361, and CS362'
           },
   CS475: { description: 'Theoretical and practical survey of parallel programming, including a discussion of parallel architectures, parallel programming paradigms, and parallel algorithms. Programming one or more parallel computers in a higher-level parallel language.',
             proctoredTests: 'Yes',
             book: '',
             bookLink: '',
-            prereqs: 'CS325'
+            prereqs: 'CS261'
           },
   CS496: { description: 'Introduction to the concepts and techniques for developing mobile and cloud applications.',
             proctoredTests: 'No',
