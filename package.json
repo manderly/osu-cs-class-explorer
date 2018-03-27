@@ -27,6 +27,7 @@
     "express-session": "^1.11.3",
     "fast-json-patch": "^1.0.0",
     "font-awesome": ">=4.1.0",
+    "google-spreadsheet": "^2.0.4",
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
     "gulp-env": "^0.4.0",
