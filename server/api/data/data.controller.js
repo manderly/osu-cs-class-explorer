@@ -84,9 +84,13 @@ function processReview(row, postfix) {
     //make an empty object for this key
     courses[key] = {
       fullName: courseName,
+      shortName: key,
       tips: [],
       difficulty: [0, 0, 0, 0, 0],
       timeSpent: [0, 0, 0, 0],
+      pairings: {},
+      commonPairingsNames: ['','',''],
+      commonPairingsCount: [0,0,0],
       description,
       proctoredTests,
       book,
@@ -131,6 +135,92 @@ function processReview(row, postfix) {
   } else if (courseTimeSpent === '18+ hours') {
     courses[key].timeSpent[3] = courses[key].timeSpent[3] + 1;
   }
+
+
+  /* Update the course pairings object
+
+  How this works:
+
+  Each course checks its neighbors and increments their counts in its own pairings object if it finds them.
+  '' checks _2 and _3
+  _2 checks '' and _3
+  _3 checks '' and _2
+  Since we need the pairing data to be present on all members of a possible pair (or triplet)
+
+  The pairings object looks like this inside a course's data:
+  CS161: {
+    pairings: {
+      225: 3,
+      999: 1
+    }
+  }
+
+  Later, we pick out the x (probably 3) most frequent pairings and display those to the user.
+
+*/
+  let companion1 = '';
+  let companion2 = '';
+  let companion3 = '';
+
+  if (postfix == '') {
+    //on the first course, so check #2 and #2
+    if (row.didyoutakeasecondcoursethisquarter == 'Yes') {
+      companion2 = row.whatcoursedidyoutake_2.substring(0, 6).split(' ').join('');
+
+      if (!courses[key].pairings[companion2]) {
+        courses[key].pairings[companion2] = 1; //init
+      } else {
+        courses[key].pairings[companion2] += 1; //increment
+      }
+    }
+
+    if (row.didyoutakeathirdcoursethisquarter == 'Yes') {
+      companion3 = row.whatcoursedidyoutake_3.substring(0, 6).split(' ').join('');
+
+      if (!courses[key].pairings[companion3]) {
+        courses[key].pairings[companion3] == 1;
+      } else {
+        courses[key].pairings[companion3] += 1;
+      }
+    }
+  } else if (postfix == '_2') {
+      //grab #1 and check if #3 exists
+      companion1 = row.whatcoursedidyoutake.substring(0, 6).split(' ').join('');
+
+      if (!courses[key].pairings[companion1]) {
+        courses[key].pairings[companion1] = 1;
+      } else {
+        courses[key].pairings[companion1] += 1;
+      }
+
+      if (row.didyoutakeathirdcoursethisquarter == 'Yes') {
+        companion3 = row.whatcoursedidyoutake_3.substring(0, 6).split(' ').join('');
+
+        if (!courses[key].pairings[companion3]) {
+          courses[key].pairings[companion3] = 1;
+        } else {
+          courses[key].pairings[companion3] += 1;
+        }
+      }
+  } else if (postfix == '_3') {
+      //grab #1 and #2
+      companion1 = row.whatcoursedidyoutake.substring(0, 6).split(' ').join('');
+      if (!courses[key].pairings[companion1]) {
+        courses[key].pairings[companion1] = 1;
+      } else {
+        courses[key].pairings[companion1] += 1;
+      }
+
+      companion2 = row.whatcoursedidyoutake_2.substring(0, 6).split(' ').join('');
+      if (!courses[key].pairings[companion2]) {
+        courses[key].pairings[companion2] = 1;
+      } else {
+        courses[key].pairings[companion2] += 1;
+      }
+  }
+
+  console.log(key + " pairings:");
+  console.log(courses[key].pairings);
 }
 
 

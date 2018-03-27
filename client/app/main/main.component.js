@@ -15,7 +15,7 @@ export class MainController {
   //chart stuff
   difficultyChart;
   timeSpentChart;
-
+  pairingsChart;
 
   difficultyLabels = ['1 - Easy A', '2 - Mostly easy', '3 - Kinda hard', '4 - Very challenging', '5 - Prepare to be wrecked'];
   difficultyData = []; //array of 5 elements
@@ -23,8 +23,14 @@ export class MainController {
   timeSpentLabels = ['0-5 hours', '6-12 hours', '13-18 hours', '18+ hours'];
   timeSpentData = []; //array of 4 elements
 
+  pairingsLabels = ['CS100', 'CS200', 'CS300', 'Jon'];
+  pairingsData = [15, 9, 3, 1];
+
   //light to dark orange tones
   chartColors = ['#fedbcd', '#fdb89b', '#fa7138', '#dc4405', '#641f02'];
+  //dark to light orange tones (added for bar chart)
+  chartColorsReversed = this.chartColors.reverse();
+
   chartOptions = {
     cutoutPercentage: 40,
     legend: {
@@ -71,6 +77,10 @@ export class MainController {
 
     if (this.timeSpentChart) {
       this.timeSpentChart.destroy();
+    }
+
+    if (this.pairingsChart) {
+      this.pairingsChart.destroy();
     }
 
     /* build the difficulty donut chart and legend */
@@ -136,8 +146,39 @@ export class MainController {
     });
     /* eslint-disable quotes */
 
+    /* build the common course pairings bar chart and legend */
+    const pairingsChartData = {
+      labels: this.pairingsLabels,
+      datasets: [{
+        data: this.pairingsData,
+        backgroundColor: this.chartColorsReversed
+      }]
+      // These labels appear in the legend and in the tooltips when hovering different arcs
+    };
+
+    /* eslint-enable quotes */
+    const ctxPairings = document.getElementById('bar-pairings').getContext('2d');
+    this.pairingsChart = new Chart(ctxPairings, { // eslint-disable-line no-undef
+      type: 'horizontalBar',
+      data: pairingsChartData,
+      options: {
+        legendCallback: pairingsChart => {
+          var text = [];
+          text.push('<ul class="barLegend">');
+          for (let i = 0; i < this.pairingsData.length; i++) {
+            text.push('<li>');
+            text.push('<span style="background-color:' + this.chartColors[i] + ';" class="legendLabelBox"></span><span class="legendLabelText">' + timeSpentChart.data.labels[i] + '</span>');
+            text.push('</li>');
+          }
+          text.push('</ul>');
+          return text.join('');
+        }
+      }
+    });
+
     document.getElementById('difficulty-chart-legend').innerHTML = this.difficultyChart.generateLegend();
     document.getElementById('timeSpent-chart-legend').innerHTML = this.timeSpentChart.generateLegend();
+    document.getElementById('pairings-chart-legend').innerHTML = this.pairingsChart.generateLegend();
   }
 
 }
