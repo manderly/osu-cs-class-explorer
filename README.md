@@ -31,8 +31,13 @@ Run `npm test` to run the unit tests with karma.
 
 # Change log
 
-- **March 27, 2018** Major bug fix: app now includes course reviews that co-exist on the same line in the spreadsheet. Switched to [Google Spreadsheet](https://www.npmjs.com/package/google-spreadsheet) package and improved the way rows are parsed. App now displays 658 reviews. 
-- **November 2017** App goes live with 330+ course reviews.
+**March 2018** 
+New feature: "Group work", a short section describing the course's amount and type of group work (if any)
+
+Major bug fix: app now includes course reviews that co-exist on the same line in the spreadsheet. Switched to [Google Spreadsheet](https://www.npmjs.com/package/google-spreadsheet) package and improved the way rows are parsed. App now displays 658 reviews. 
+
+**November 2017** 
+App goes live with 330+ course reviews.
 
 Thank you, everyone, for your feedback and interest in the Course Explorer!
 
