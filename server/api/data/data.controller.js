@@ -67,7 +67,7 @@ function processReview(row, postfix) {
 
   //ecmascript 6 destructuring protects against empty data coming back
   const summary = summaries[key] || {};
-  const {description = '', proctoredTests = '', book = '', bookLink = '', prereqs = ''} = summary;
+  const {description = '', proctoredTests = '', book = '', bookLink = '', prereqs = '', groupWork = ''} = summary;
 
   //if this class isn't in the data object yet, add it
   if (!courses[key]) {
@@ -92,10 +92,11 @@ function processReview(row, postfix) {
       book,
       bookLink,
       prereqs,
+      groupWork
     };
   }
 
-  //then push the data in
+  /* Make a new tip object and get the timestamp so we can display the tip's age */
   let tip = {};
   if (row[whatTipsWouldYouGive]) {
     //push the tip and the date of that tip
