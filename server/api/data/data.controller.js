@@ -37,11 +37,6 @@ For development purposes, I have my own local copy of the OSU spreadsheet:
 My own spreadsheetId: '1pdnIGycCQ5UZGIDNQBQd5hj2qVooxkbhZxbIx7Sn1nc'
 OSU subreddit spreadsheetId: '1MFBGJbOXVjtThgj5b6K0rv9xdsC1M2GQ0pJVB-8YCeU'
 */
-
-/* Get the spreadsheet from Google and parse it into a JSON object organized
-by course name. Return the result. This method is called by data.controller.js.
-*/
-
 var doc = new GoogleSpreadsheet('1MFBGJbOXVjtThgj5b6K0rv9xdsC1M2GQ0pJVB-8YCeU');
 var sheet;
 
