@@ -92,11 +92,13 @@ export class MainController {
         legendCallback: difficultyChart => {
           var text = [];
           text.push('<ul class="donutLegend">');
+          /* eslint-disable prefer-template */
           for (let i = 0; i < this.difficultyData.length; i++) {
             text.push('<li>');
             text.push('<span style="background-color:' + this.chartColors[i] + ';" class="legendLabelBox"></span><span class="legendLabelText">' + difficultyChart.data.labels[i] + '</span>');
             text.push('</li>');
           }
+          /* eslint-enable prefer-template */
           text.push('</ul>');
           return text.join('');
         }
