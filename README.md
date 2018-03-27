@@ -30,3 +30,10 @@ Run `gulp buildcontrol:heroku` to deploy to Heroku.
 Run `npm test` to run the unit tests with karma.
 
 &copy; 2017 Mandi Grant
+
+# Change log
+
+- **March 27, 2018** Major bug fix: app now includes course reviews that co-exist on the same line in the spreadsheet. Switched to [Google Spreadsheet](https://www.npmjs.com/package/google-spreadsheet) package and improved the way rows are parsed. App now displays 658 reviews. 
+- **November 2017** App goes live with 330+ course reviews.
+
+Thank you, everyone, for your feedback and interest in the Course Explorer!
