@@ -7,7 +7,7 @@ The [OSU eCampus subreddit](https://www.reddit.com/r/OSUOnlineCS/) collects cour
 This project was generated with the [Angular Full-Stack Generator](https://github.com/DaftMonk/generator-angular-fullstack) version 4.2.2.
 
 
-![OSU Course Explorer - November 2017](screenshots/osu-cs-course-explorer-november-2017.png "Screenshot of app taken November 2017")
+![OSU Course Explorer - March 2018](screenshots/osu-cs-course-explorer_march_2018.png "Screenshot of app taken March 2018")
 
 # Development
 
@@ -32,6 +32,7 @@ Run `npm test` to run the unit tests with karma.
 # Change log
 
 **March 2018** 
+- New feature: "Common pairings", a new chart displaying the courses most frequently paired with a particular course as per the student-reported data
 - New feature: "Group work", a short section describing the course's amount and type of group work (if any)
 - Major bug fix: app now includes course reviews that co-exist on the same line in the spreadsheet. Switched to [Google Spreadsheet](https://www.npmjs.com/package/google-spreadsheet) package and improved the way rows are parsed. App now displays 658 reviews. 
 
