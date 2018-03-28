@@ -84,9 +84,13 @@ function processReview(row, postfix) {
     //make an empty object for this key
     courses[key] = {
       fullName: courseName,
+      shortName: key,
       tips: [],
       difficulty: [0, 0, 0, 0, 0],
       timeSpent: [0, 0, 0, 0],
+      pairings: {},
+      commonPairingsNames: [],
+      commonPairingsCounts: [],
       description,
       proctoredTests,
       book,
@@ -131,8 +135,131 @@ function processReview(row, postfix) {
   } else if (courseTimeSpent === '18+ hours') {
     courses[key].timeSpent[3] = courses[key].timeSpent[3] + 1;
   }
+
+  /* Update the course pairings object
+
+  How this works:
+
+  Each course checks its neighbors and increments their counts in its own pairings object if it finds them.
+  '' checks _2 and _3
+  _2 checks '' and _3
+  _3 checks '' and _2
+  Since we need the pairing data to be present on all members of a possible pair (or triplet)
+
+  The pairings object looks like this inside a course's data:
+  CS161: {
+    pairings: {
+      225: 3,
+      999: 1
+    }
+  }
+
+  Later, we pick out the most frequent pairings and display those to the user.
+*/
+
+  let companion1 = '';
+  let companion2 = '';
+  let companion3 = '';
+
+  if (postfix == '') {
+    //on the first course, so check #2 and #2
+    if (row.didyoutakeasecondcoursethisquarter == 'Yes') {
+      companion2 = row.whatcoursedidyoutake_2.substring(0, 6).split(' ').join('');
+
+      if (!courses[key].pairings[companion2]) {
+        courses[key].pairings[companion2] = 1; //init
+      } else {
+        courses[key].pairings[companion2] += 1; //increment
+      }
+    }
+
+    if (row.didyoutakeathirdcoursethisquarter == 'Yes') {
+      companion3 = row.whatcoursedidyoutake_3.substring(0, 6).split(' ').join('');
+
+      if (!courses[key].pairings[companion3]) {
+        courses[key].pairings[companion3] == 1;
+      } else {
+        courses[key].pairings[companion3] += 1;
+      }
+    }
+  } else if (postfix == '_2') {
+      //grab #1 and check if #3 exists
+      companion1 = row.whatcoursedidyoutake.substring(0, 6).split(' ').join('');
+
+      if (!courses[key].pairings[companion1]) {
+        courses[key].pairings[companion1] = 1;
+      } else {
+        courses[key].pairings[companion1] += 1;
+      }
+
+      if (row.didyoutakeathirdcoursethisquarter == 'Yes') {
+        companion3 = row.whatcoursedidyoutake_3.substring(0, 6).split(' ').join('');
+
+        if (!courses[key].pairings[companion3]) {
+          courses[key].pairings[companion3] = 1;
+        } else {
+          courses[key].pairings[companion3] += 1;
+        }
+      }
+  } else if (postfix == '_3') {
+      //grab #1 and #2
+      companion1 = row.whatcoursedidyoutake.substring(0, 6).split(' ').join('');
+      if (!courses[key].pairings[companion1]) {
+        courses[key].pairings[companion1] = 1;
+      } else {
+        courses[key].pairings[companion1] += 1;
+      }
+
+      companion2 = row.whatcoursedidyoutake_2.substring(0, 6).split(' ').join('');
+      if (!courses[key].pairings[companion2]) {
+        courses[key].pairings[companion2] = 1;
+      } else {
+        courses[key].pairings[companion2] += 1;
+      }
+  }
 }
 
+/* The pairing data must be done once every single row has been processed individually.
+    For each course in courses, find its most commonly paired-with classes. Take the top 4
+    (or however many are available if less than 4) and put them into arrays on the course object
+    for use by the front-end bar chart.
+*/
+function processPairingData() {
+  //Each course has a pairings object to process
+  for (var key in courses) {
+    /* This step builds the arrays that are used on the front-end to display the pairings data.
+        The arrays must be structured like this:
+        commonPairingsNames: ['','',''],
+        commonPairingsCounts: [0,0,0]
+
+        1. Sort the courses into an array of pairs, sorted in descending order (highest first).
+        2. Grab the first 4 elements and split them off into the two separate arrays read by the chart.
+    */
+
+    let sorted = [];
+    for (var companion in courses[key].pairings) {
+      sorted.push([companion, courses[key].pairings[companion]]);
+    }
+
+    sorted.sort(function(a, b) {
+      return b[1] - a[1];
+    });
+
+    //bar chart just displays the top 4, so just grab those
+    //(if there are that many, otherwise use as many as there are)
+    let barsToShow = 4;
+    if (sorted.length < barsToShow) {
+      barsToShow = sorted.length;
+    }
+
+    for (var i = 0; i < barsToShow; i++) {
+      console.log("Pushing " + sorted[i][0] + " into " + courses[key].commonPairingsNames);
+      courses[key].commonPairingsNames.push(sorted[i][0]);
+      courses[key].commonPairingsCounts.push(sorted[i][1]);
+    }
+
+  }
+}
 
 /* Open the spreadsheet and extract its data */
 function buildCourseData() {
@@ -174,6 +301,9 @@ function buildCourseData() {
             processReview(row, '_3');
           }
         });
+
+        processPairingData();
+
         var lastBuiltTimestamp = moment();
 
         let appData = {
