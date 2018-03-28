@@ -165,17 +165,6 @@ export class MainController {
       type: 'horizontalBar',
       data: pairingsChartData,
       options: {
-        legendCallback: pairingsChart => {
-          var text = [];
-          text.push('<ul class="barLegend">');
-          for (let i = 0; i < this.pairingsData.length; i++) {
-            text.push('<li>');
-            text.push('<span style="background-color:' + this.chartColors[i] + ';" class="legendLabelBox"></span><span class="legendLabelText">' + timeSpentChart.data.labels[i] + '</span>');
-            text.push('</li>');
-          }
-          text.push('</ul>');
-          return text.join('');
-        },
         scales: {
           xAxes: [{
             ticks: {
