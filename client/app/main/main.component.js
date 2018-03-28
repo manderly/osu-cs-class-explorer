@@ -23,8 +23,8 @@ export class MainController {
   timeSpentLabels = ['0-5 hours', '6-12 hours', '13-18 hours', '18+ hours'];
   timeSpentData = []; //array of 4 elements
 
-  pairingsLabels = ['CS100', 'CS200', 'CS300', 'Jon'];
-  pairingsData = [15, 9, 3, 1];
+  pairingsLabels; //fill in later, with data from server response
+  pairingsData; //fill in later, with data from server response
 
   //light to dark orange tones
   chartColors = ['#fedbcd', '#fdb89b', '#fa7138', '#dc4405', '#641f02'];
@@ -69,6 +69,8 @@ export class MainController {
     this.displayCourse = this.courses[courseKey];
     this.difficultyData = this.displayCourse.difficulty;
     this.timeSpentData = this.displayCourse.timeSpent;
+    this.pairingsLabels = this.displayCourse.commonPairingsNames;
+    this.pairingsData = this.displayCourse.commonPairingsCounts;
 
     /* Wipe any old charts off the canvas */
     if (this.difficultyChart) {
@@ -153,6 +155,7 @@ export class MainController {
         data: this.pairingsData,
         backgroundColor: this.chartColorsReversed
       }]
+
       // These labels appear in the legend and in the tooltips when hovering different arcs
     };
 
@@ -172,6 +175,13 @@ export class MainController {
           }
           text.push('</ul>');
           return text.join('');
+        },
+        scales: {
+          xAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
         }
       }
     });

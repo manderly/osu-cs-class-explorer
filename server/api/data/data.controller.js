@@ -89,8 +89,8 @@ function processReview(row, postfix) {
       difficulty: [0, 0, 0, 0, 0],
       timeSpent: [0, 0, 0, 0],
       pairings: {},
-      commonPairingsNames: ['','',''],
-      commonPairingsCount: [0,0,0],
+      commonPairingsNames: [],
+      commonPairingsCounts: [],
       description,
       proctoredTests,
       book,
@@ -136,7 +136,6 @@ function processReview(row, postfix) {
     courses[key].timeSpent[3] = courses[key].timeSpent[3] + 1;
   }
 
-
   /* Update the course pairings object
 
   How this works:
@@ -155,9 +154,9 @@ function processReview(row, postfix) {
     }
   }
 
-  Later, we pick out the x (probably 3) most frequent pairings and display those to the user.
-
+  Later, we pick out the most frequent pairings and display those to the user.
 */
+
   let companion1 = '';
   let companion2 = '';
   let companion3 = '';
@@ -218,11 +217,49 @@ function processReview(row, postfix) {
         courses[key].pairings[companion2] += 1;
       }
   }
-
-  console.log(key + " pairings:");
-  console.log(courses[key].pairings);
 }
 
+/* The pairing data must be done once every single row has been processed individually.
+    For each course in courses, find its most commonly paired-with classes. Take the top 4
+    (or however many are available if less than 4) and put them into arrays on the course object
+    for use by the front-end bar chart.
+*/
+function processPairingData() {
+  //Each course has a pairings object to process
+  for (var key in courses) {
+    /* This step builds the arrays that are used on the front-end to display the pairings data.
+        The arrays must be structured like this:
+        commonPairingsNames: ['','',''],
+        commonPairingsCounts: [0,0,0]
+
+        1. Sort the courses into an array of pairs, sorted in descending order (highest first).
+        2. Grab the first 4 elements and split them off into the two separate arrays read by the chart.
+    */
+
+    let sorted = [];
+    for (var companion in courses[key].pairings) {
+      sorted.push([companion, courses[key].pairings[companion]]);
+    }
+
+    sorted.sort(function(a, b) {
+      return b[1] - a[1];
+    });
+
+    //bar chart just displays the top 4, so just grab those
+    //(if there are that many, otherwise use as many as there are)
+    let barsToShow = 4;
+    if (sorted.length < barsToShow) {
+      barsToShow = sorted.length;
+    }
+
+    for (var i = 0; i < barsToShow; i++) {
+      console.log("Pushing " + sorted[i][0] + " into " + courses[key].commonPairingsNames);
+      courses[key].commonPairingsNames.push(sorted[i][0]);
+      courses[key].commonPairingsCounts.push(sorted[i][1]);
+    }
+
+  }
+}
 
 /* Open the spreadsheet and extract its data */
 function buildCourseData() {
@@ -264,6 +301,9 @@ function buildCourseData() {
             processReview(row, '_3');
           }
         });
+
+        processPairingData();
+
         var lastBuiltTimestamp = moment();
 
         let appData = {
