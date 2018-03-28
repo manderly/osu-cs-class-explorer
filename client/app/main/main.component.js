@@ -29,7 +29,7 @@ export class MainController {
   //light to dark orange tones
   chartColors = ['#fedbcd', '#fdb89b', '#fa7138', '#dc4405', '#641f02'];
   //dark to light orange tones (added for bar chart)
-  chartColorsReversed = this.chartColors.reverse();
+  chartColorsReversed = ['#641f02', '#dc4405', '#fa7138', '#fdb89b', '#fedbcd'];
 
   chartOptions = {
     cutoutPercentage: 40,

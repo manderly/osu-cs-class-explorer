@@ -253,7 +253,6 @@ function processPairingData() {
     }
 
     for (var i = 0; i < barsToShow; i++) {
-      console.log("Pushing " + sorted[i][0] + " into " + courses[key].commonPairingsNames);
       courses[key].commonPairingsNames.push(sorted[i][0]);
       courses[key].commonPairingsCounts.push(sorted[i][1]);
     }
