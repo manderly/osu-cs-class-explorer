@@ -7,7 +7,7 @@ The [OSU eCampus subreddit](https://www.reddit.com/r/OSUOnlineCS/) collects cour
 This project was generated with the [Angular Full-Stack Generator](https://github.com/DaftMonk/generator-angular-fullstack) version 4.2.2.
 
 
-![OSU Course Explorer - March 2018](screenshots/osu-cs-course-explorer_march_2018.png "Screenshot of app taken March 2018")
+![OSU Course Explorer - March 2018](screenshots/osu-cs-course-explorer.com_march_2018.png "Screenshot of app taken March 2018")
 
 # Development
 
