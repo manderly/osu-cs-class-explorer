@@ -262,6 +262,9 @@ function processPairingData() {
 
 /* Open the spreadsheet and extract its data */
 function buildCourseData() {
+  courses = {};
+  courseNames = [];
+  reviewCount = 0;
   let json;
   async.series([
     function setAuth(step) {
