@@ -83,7 +83,7 @@ export const summaries = {
             book: '',
             bookLink: '',
             prereqs: 'CS261',
-            groupWork: 'Almost exclusively group work. Work in a team of 5 to prepare weekly written reports about the software development lifecycle.'
+            groupWork: 'Almost exclusively group work. Work in a randomly-assigned team of 5 to develop use cases, requirements, and more for the vision statement your group is randomly assigned, creating multiple 10-15+ page documents as a group. 2 weeks of group coding work at the end.'
           },
   CS362: { description: 'Introduction to the \'back end\' of the software engineering lifecycle implementation; verification and validation; debugging; maintenance.',
             proctoredTests: 'No',
