@@ -57,12 +57,12 @@ export const summaries = {
             prereqs: 'CS261 and CS225',
             groupWork: 'Graded weekly Canvas discussions in a small group and a 3-person group project the last two weeks of the quarter. Students can choose their group mates for the final project or elect to be placed in a random group.'
           },
-  CS340: { description: 'Design and implementation of relational databases, including data modeling with ER or UML, diagrams, relational schema, SQL queries, relational algebra, user interfaces, and administration.',
+  CS340: { description: 'Design and implementation of relational databases, including data modeling with ER or UML, diagrams, relational schema, SQL queries, relational algebra, user interfaces, and administration. Most of the quarter is spent working with a parternet to develop a website that displays data from a database.',
             proctoredTests: 'Yes',
             book: '',
             bookLink: '',
             prereqs: 'CS290',
-            groupWork: 'Final project is fairly involved and allows you to choose a partner (optional)'
+            groupWork: 'As of Winter 2019, all students must work in pairs on the weekly project steps. Several steps have peer-reviews as well, in which people from outside your group review your work.'
           },
   CS344: { description: 'Introduction to operating systems using UNIX as the case study. System calls and utilities, fundamentals of processes and interprocess communication.',
             proctoredTests: 'No',
