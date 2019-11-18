@@ -1,23 +1,23 @@
 /* eslint-disable max-len */
 export const summaries = {
-  CS161: { description: 'Overview of fundamental concepts of computer science. Introduction to problem solving, software engineering, and object-oriented programming. Includes algorithm design and program development. Students write small programs in C++.',
+  CS161: { description: '*NOTE: CS161 switched from C++ to Python in 2019. Reviews may contain outdated information.* Overview of fundamental concepts of computer science. Introduction to problem solving, software engineering, and object-oriented programming. Includes algorithm design and program development. Students write small programs in Python.',
             proctoredTests: 'Yes',
-            book: 'Starting Out with C++: Early Objects (9th edition)',
-            bookLink: 'http://amzn.to/2hz4mOi',
+            book: '',
+            bookLink: '',
             prereqs: 'None',
             groupWork: 'None'
           },
-  CS162: { description: 'Introduces data structures, algorithms, and requires students to produce weekly labs and larger bi-weekly projects in C++.',
+  CS162: { description: '*NOTE: CS162 switches from C++ to Python beginning Winter 2020. Reviews may contain outdated information.* Introduces data structures, algorithms, and requires students to produce weekly labs and larger bi-weekly projects in Python.',
             proctoredTests: 'No',
-            book: 'Starting Out with C++: Early Objects (9th edition)',
-            bookLink: 'http://amzn.to/2hz4mOi',
+            book: '',
+            bookLink: '',
             prereqs: 'CS161',
             groupWork: 'One group project halfway through the quarter where a team of about 5 students implements a given program in C++'
           },
   CS165: { description: 'Condenses CS161 and CS162 into one fast-paced course.',
             proctoredTests: 'Yes',
-            book: 'Starting Out with C++: Early Objects (9th edition)',
-            bookLink: 'http://amzn.to/2hz4mOi',
+            book: '',
+            bookLink: '',
             prereqs: 'None',
             groupWork: 'Two small group projects in which you compare your work on a previous assignment and decide whose was best and explain why.'
           },
@@ -139,6 +139,20 @@ export const summaries = {
             bookLink: '',
             prereqs: 'CS344',
             groupWork: 'None'
+          },
+  CS492: { description: 'An elective course that introduces mobile development concepts. Formerly part of CS496, which combined mobile and cloud into one course.',
+            proctoredTests: 'Unknown',
+            book: '',
+            bookLink: '',
+            prereqs: 'CS344',
+            groupWork: 'Unknown'
+          },
+  CS493: { description: 'An elective course that introduces cloud development concepts. Formerly part of CS496, which combined mobile and cloud into one course.',
+            proctoredTests: 'Unknown',
+            book: '',
+            bookLink: '',
+            prereqs: 'CS344',
+            groupWork: 'Unknown'
           }
 };
 /* eslint-enable max-len */
