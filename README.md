@@ -22,6 +22,7 @@ This project was generated with the [Angular Full-Stack Generator](https://githu
 Run `npm install` to install server dependencies.
 
 For setup on a new machine:
+
 ```gulp build```
 
 ```cd dist```
