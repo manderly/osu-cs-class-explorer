@@ -61,6 +61,7 @@
     "angular-mocks": "~1.6.0",
     "autoprefixer": "^6.0.0",
     "awesome-typescript-loader": "^1.1.1",
+    "babel-cli": "^6.26.0",
     "babel-core": "^6.25.0",
     "babel-eslint": "^6.0.4",
     "babel-loader": "^6.2.4",
@@ -78,7 +79,6 @@
     "eslint": "^2.12.0",
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.9.0",
-    "google-spreadsheet": "^2.0.4",
     "grunt": "^1.0.1",
     "grunt-build-control": "^0.7.0",
     "html-webpack-harddisk-plugin": "~0.0.2",
@@ -129,7 +129,11 @@
   "scripts": {
     "test": "gulp test",
     "update-webdriver": "node node_modules/protractor/bin/webdriver-manager update",
-    "start": "node server"
+    "start": "npm run build && node ./build/index.js",
+    "start-dev": "node server",
+    "clean": "rm -rf build && mkdir build",
+    "build-babel": "babel -d ./build ./server -s",
+    "build": "npm run clean && npm run build-babel"
   },
   "resolutions": {
     "**/**/node-gyp": "5.0.0"

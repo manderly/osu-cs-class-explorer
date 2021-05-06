@@ -11,3 +11,4 @@ npm-debug.log
 coverage
 .DS_Store
 *.sqlite
+build
