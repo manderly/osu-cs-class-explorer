@@ -14,12 +14,26 @@ This project was generated with the [Angular Full-Stack Generator](https://githu
 ## Prerequisites
 
 - [Git](https://git-scm.com/)
-- [Node.js and npm](nodejs.org) Node >= 4.x.x, npm >= 2.x.x
+- [Node.js and npm](nodejs.org) Node >= 15.x.x, npm >= 2.x.x
 - [Gulp](http://gulpjs.com/) (`npm install --global gulp-cli`)
 
 ## Building & Running
 
 Run `npm install` to install server dependencies.
+
+For setup on a new machine:
+
+```gulp build```
+
+```cd dist```
+
+```git init```
+
+```heroku git:remote -a <your-project>```
+
+```gulp buildcontrol:heroku```
+
+For subsequent runs:
 
 Run `gulp build` for building and `gulp serve` for preview on localhost:3000.
 
@@ -31,6 +45,9 @@ Run `npm test` to run the unit tests with karma.
 
 # Change log
 
+**May 2021**
+- Maintenance: Modernized node, updated packages, added a Google ad (sorry, this app costs money to run)
+
 **March 2018** 
 - New feature: "Common pairings", a new chart displaying the courses most frequently paired with a particular course as per the student-reported data
 - New feature: "Group work", a short section describing the course's amount and type of group work (if any)
@@ -41,4 +58,4 @@ Run `npm test` to run the unit tests with karma.
 
 Thank you, everyone, for your feedback and interest in the Course Explorer!
 
-&copy; 2017 Mandi Grant
+&copy; 2021 Mandi Burley
