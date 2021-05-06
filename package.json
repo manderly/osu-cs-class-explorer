@@ -83,6 +83,8 @@
     "grunt-build-control": "^0.7.0",
     "html-webpack-harddisk-plugin": "~0.0.2",
     "html-webpack-plugin": "^2.16.0",
+    "imagemin": "^8.0.0",
+    "imagemin-cli": "^6.0.0",
     "imports-loader": "^0.6.5",
     "isparta": "^4.0.0",
     "isparta-instrumenter-loader": "^1.0.0",
@@ -127,16 +129,14 @@
     "node": "^15.1.0"
   },
   "scripts": {
+    "preinstall": "npx npm-force-resolutions",
     "test": "gulp test",
     "update-webdriver": "node node_modules/protractor/bin/webdriver-manager update",
-    "start": "npm run build && node ./build/index.js",
-    "start-dev": "node server",
-    "clean": "rm -rf build && mkdir build",
-    "build-babel": "babel -d ./build ./server -s",
-    "build": "npm run clean && npm run build-babel"
+    "start": "node server"
   },
   "resolutions": {
-    "**/**/node-gyp": "5.0.0"
+    "**/**/node-gyp": "5.0.0",
+    "graceful-fs": "^4.2.4"
   },
   "private": true
 }
