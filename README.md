@@ -21,6 +21,19 @@ This project was generated with the [Angular Full-Stack Generator](https://githu
 
 Run `npm install` to install server dependencies.
 
+For setup on a new machine:
+```gulp build```
+
+```cd dist```
+
+```git init```
+
+```heroku git:remote -a <your-project>```
+
+```gulp buildcontrol:heroku```
+
+For subsequent runs:
+
 Run `gulp build` for building and `gulp serve` for preview on localhost:3000.
 
 Run `gulp buildcontrol:heroku` to deploy to Heroku.
