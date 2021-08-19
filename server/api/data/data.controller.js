@@ -31,15 +31,13 @@ setTimeout(buildData, 5 * 1000);
 //and then rebuild every 12 hours
 setInterval(buildData, 43200 * 1000);
 
-/*
-For development purposes, I have my own local copy of the OSU spreadsheet:
 
-My own spreadsheetId: '1pdnIGycCQ5UZGIDNQBQd5hj2qVooxkbhZxbIx7Sn1nc'
-OSU subreddit spreadsheetId: '1MFBGJbOXVjtThgj5b6K0rv9xdsC1M2GQ0pJVB-8YCeU'
-*/
-var doc = new GoogleSpreadsheet('10bNqoHygWafLR8N-2-FoODK49pWys1jSG9pYogta_zg');
+/* 8/2021 update: Copy the official spreadsheet into my own, then append numbers to header row cells so the spreadsheet scraper works. */
+var originalDoc = new GoogleSpreadsheet('1MFBGJbOXVjtThgj5b6K0rv9xdsC1M2GQ0pJVB-8YCeU');
+var newDoc = new GoogleSpreadsheet('1ZkqM80Ubcixvs2sH9pp5FtngbcuCjS3H4g2a_65lhng');
 
-var sheet;
+var originalSheet;
+var newSheet;
 
 let courses = {};
 let courseNames = [];
@@ -52,10 +50,10 @@ let reviewCount = 0;
   Pass it the row and the "postfix" (empty string, '_2', or '_3') */
 function processReview(row, postfix) {
   let key;
-  let whatCourseDidYouTake = `What Course Did You Take?${postfix}`;
-  let whatTipsWouldYouGive = `What tips would you give students taking this course?${postfix}`;
-  let howHardWasThisClass = `How hard was this class?${postfix}`;
-  let howMuchTime = `How much time did you spend on average (per week) for this class?${postfix}`;
+  let whatCourseDidYouTake = `course${postfix}`;
+  let whatTipsWouldYouGive = `tips${postfix}`;
+  let howHardWasThisClass = `difficulty${postfix}`;
+  let howMuchTime = `time${postfix}`;
 
   //use the course name as a key, like "CS162"
   key = row[whatCourseDidYouTake].substring(0, 6).split(' ')
@@ -108,7 +106,7 @@ function processReview(row, postfix) {
     
     //push the tip and the date of that tip
     //let rawTimestamp = getJsDateFromExcel(row['timestamp']);
-    let rawTimestamp = row['Timestamp'];
+    let rawTimestamp = row['timestamp'];
     tip = {
       tip: row[whatTipsWouldYouGive],
       timestamp: moment(rawTimestamp, 'MM/DD/YYYY HH:mm:ss').format('MMMM YYYY')
@@ -281,8 +279,9 @@ function buildCourseData() {
   courseNames = [];
   reviewCount = 0;
   let json;
+
   async.series([
-    function setAuth(step) {
+    function authOriginalDoc(step) {
 /*
       await doc.useServiceAccountAuth({
         client_email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
@@ -297,50 +296,97 @@ function buildCourseData() {
         private_key: '-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQD6+utHi5OD99dB\nInomCT/EmxBU4WEAcqoDB9mO1YzikejZF7P4Y63FnavXHfNWlCBkmCLM/yGXoWD+\nEwRB2n2bPztF6I193xIAGn80BVAYB+1PEDjkQkYP8WP+Vob5j/yAOhOJI47WTn/J\nhtUXI6TcDrGfUKWN73rL8ZYp6ZAWnykMSeNQ/6GI+pqaJ6zA35syLMzF1PtwMEu6\neGZDvU/OHrUQ++6sAQ8H4uDOoFa5Ex9B+iO6A4iXvm0EjZDQ3NXgoDAzYH1k91kk\nI6yYT7YPwWwl6pf14GYgat4LegXRb/wkqeyssP9nKb3MVLCJvpO9jqeZ6lAC/6vX\nUluiDtJxAgMBAAECggEADkQ1O7RUmMC9w9RDMd5umVUYZ//F9xvde8W+ZVjwnMgv\nHoiDNJpLbF9Yn1YysOwjfX5bo5AY22z7JcQkVr82Cr0s2A3mnZYgmICJFKac6XnJ\nYLg3CKwW/hTiUoi9/EmF0I7kkYQDvH06tLSZMCsYteDQslH38C4Ryo4fc19VP0DU\n58Z9JKHRwEo75F+oKA+kdk8VHfsDH5BtzDfXCuRR48N+Xc1TJDqZtbe2YCK2Ur5y\n+zxz7xE5UDHMlnKQgGj+T/22XcKNRe0WnHPCyET204RaZEIZT4CHY5ZJVdZ+vAHy\naovS9OximV1HpogP11PBkGrsuG+QVcfBXDJpS4E2gQKBgQD/VbwdyQDPIVxI/7S6\nwmbnWU9dGJScm6uIK872EDGHvMQFzpHPQkTN5sb8S1UaoBWB7kj1fJ/XW/usG0lC\nNg5DqIIuUXKY0TPW89jMu3cvDYNfPzv/wy4hBL61i6c4Ed5o9pm5/trOpirZCNfL\n7a1ZgGuK9WlYh7JfH/ioAnWrgQKBgQD7okfFCIYsEBASF0YZh/qyKIQSefuAo5QV\nuOfyNeIiKU1g51cNgPRSC/Yyt46rDUbe619b4GA8CM1Y0tHQ5L2KEG4kwmWq/fy0\nvdqdRZY4RD9jWtxftm3Q6dJqDq46MOzrseJhG4gh9BwIpMXk8HtjhLjCd4zxolHQ\nBkKH789e8QKBgQDFXp1qHKy+b5gpaVdnocvveu7JFK4TnJVsTgjN1dijhvuzTWkS\nX7RVwNUBwq2HRkU5yVqmP+5Ch3y0Hed0Adrm28O9UAIYNGYw+w8Turk3Kufo4TVc\nz5/BsCxGoyvgQJe+ZRiRWHoEkRe/6oD8xr1f2M/Ie0kyQLpVo54PKM+SgQKBgGog\nLxSyW6QJwj1fA3mRF/I7lDgWqjO+yZ2/tlM41n6B3NiZuOVBFcnksZkCQXFy0AkE\nS9t77hpju/dSMptfXXD1LP7j3e0X4ZR43dKmnoxsfC9zCq5zSi1p8Aw61NBGAiYF\nh+xcqDVptskOdUfxBJkcSK/7q73dL5QEj9q1EUiBAoGAbNdJkhFI38ubgTka7Pwx\naGq7i2SBFXoqXuyCawoyGr95fI68SYSKUO8D3fCmi5KqzhyeOG+Y0uDtXITYS02u\n9bjreiKHBqELfCOGGHpJch54QhcZYmNAt4f96DmwCiVo8r74ktE6obhBlPi6AGfW\nhRYpRSVAVIgK/3tXAIub6hw=\n-----END PRIVATE KEY-----\n'
       };
 
-      //console.log(process.env.GOOGLE_PRIVATE_KEY);
-
-      doc.useServiceAccountAuth({
+      originalDoc.useServiceAccountAuth({
         client_email: credsJson.client_email,
         private_key: credsJson.private_key,
       }).then(() => {
-        doc.loadInfo().then(() => {
+        originalDoc.loadInfo().then(() => {
           step();
         });
       });
-
-      /* eslint-enable camelcase, max-len */
-      //await doc.useServiceAccountAuth(credsJson, step);
-      //await doc.loadInfo();
     },
 
-    function getInfoAndWorksheets(step) {
-      // doc.getInfo(function(err, info) {
-      //   //console.log('Loaded doc: '+info.title+' by '+info.author.email);
-      //   sheet = info.worksheets[0];
-      //   //console.log('sheet 1: '+sheet.title+' '+sheet.rowCount+'x'+sheet.colCount);
-      //   step();
-      // });
-      // update my own row names
-      sheet = doc.sheetsByIndex[0];
-      step();
+    function authNewDoc(step) {
+      var credsJson = {
+        client_email: 'osu-class-explorer@api-project-700272715173.iam.gserviceaccount.com',
+        private_key: '-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQD6+utHi5OD99dB\nInomCT/EmxBU4WEAcqoDB9mO1YzikejZF7P4Y63FnavXHfNWlCBkmCLM/yGXoWD+\nEwRB2n2bPztF6I193xIAGn80BVAYB+1PEDjkQkYP8WP+Vob5j/yAOhOJI47WTn/J\nhtUXI6TcDrGfUKWN73rL8ZYp6ZAWnykMSeNQ/6GI+pqaJ6zA35syLMzF1PtwMEu6\neGZDvU/OHrUQ++6sAQ8H4uDOoFa5Ex9B+iO6A4iXvm0EjZDQ3NXgoDAzYH1k91kk\nI6yYT7YPwWwl6pf14GYgat4LegXRb/wkqeyssP9nKb3MVLCJvpO9jqeZ6lAC/6vX\nUluiDtJxAgMBAAECggEADkQ1O7RUmMC9w9RDMd5umVUYZ//F9xvde8W+ZVjwnMgv\nHoiDNJpLbF9Yn1YysOwjfX5bo5AY22z7JcQkVr82Cr0s2A3mnZYgmICJFKac6XnJ\nYLg3CKwW/hTiUoi9/EmF0I7kkYQDvH06tLSZMCsYteDQslH38C4Ryo4fc19VP0DU\n58Z9JKHRwEo75F+oKA+kdk8VHfsDH5BtzDfXCuRR48N+Xc1TJDqZtbe2YCK2Ur5y\n+zxz7xE5UDHMlnKQgGj+T/22XcKNRe0WnHPCyET204RaZEIZT4CHY5ZJVdZ+vAHy\naovS9OximV1HpogP11PBkGrsuG+QVcfBXDJpS4E2gQKBgQD/VbwdyQDPIVxI/7S6\nwmbnWU9dGJScm6uIK872EDGHvMQFzpHPQkTN5sb8S1UaoBWB7kj1fJ/XW/usG0lC\nNg5DqIIuUXKY0TPW89jMu3cvDYNfPzv/wy4hBL61i6c4Ed5o9pm5/trOpirZCNfL\n7a1ZgGuK9WlYh7JfH/ioAnWrgQKBgQD7okfFCIYsEBASF0YZh/qyKIQSefuAo5QV\nuOfyNeIiKU1g51cNgPRSC/Yyt46rDUbe619b4GA8CM1Y0tHQ5L2KEG4kwmWq/fy0\nvdqdRZY4RD9jWtxftm3Q6dJqDq46MOzrseJhG4gh9BwIpMXk8HtjhLjCd4zxolHQ\nBkKH789e8QKBgQDFXp1qHKy+b5gpaVdnocvveu7JFK4TnJVsTgjN1dijhvuzTWkS\nX7RVwNUBwq2HRkU5yVqmP+5Ch3y0Hed0Adrm28O9UAIYNGYw+w8Turk3Kufo4TVc\nz5/BsCxGoyvgQJe+ZRiRWHoEkRe/6oD8xr1f2M/Ie0kyQLpVo54PKM+SgQKBgGog\nLxSyW6QJwj1fA3mRF/I7lDgWqjO+yZ2/tlM41n6B3NiZuOVBFcnksZkCQXFy0AkE\nS9t77hpju/dSMptfXXD1LP7j3e0X4ZR43dKmnoxsfC9zCq5zSi1p8Aw61NBGAiYF\nh+xcqDVptskOdUfxBJkcSK/7q73dL5QEj9q1EUiBAoGAbNdJkhFI38ubgTka7Pwx\naGq7i2SBFXoqXuyCawoyGr95fI68SYSKUO8D3fCmi5KqzhyeOG+Y0uDtXITYS02u\n9bjreiKHBqELfCOGGHpJch54QhcZYmNAt4f96DmwCiVo8r74ktE6obhBlPi6AGfW\nhRYpRSVAVIgK/3tXAIub6hw=\n-----END PRIVATE KEY-----\n'
+      };
+
+       newDoc.useServiceAccountAuth({
+        client_email: credsJson.client_email,
+        private_key: credsJson.private_key,
+      }).then(() => {
+        newDoc.loadInfo().then(() => {
+          console.log("New doc title: " + newDoc.title);
+          step();
+        });
+      });
+    },
+
+    function copySheet(step) {
+      // clear out the old sheet
+      let deleteSheet = newDoc.sheetsByIndex[1];
+      if (deleteSheet) {
+        deleteSheet.delete();
+        console.log("Old sheet deleted");
+      } else {
+        console.log("Nothing to delete");
+      }
+      
+      // get the "live" sheet from the originalDoc
+      originalSheet = originalDoc.sheetsByIndex[0];
+
+      // copy it into my own doc so I can modify the header cell text
+      originalSheet.copyToSpreadsheet('1ZkqM80Ubcixvs2sH9pp5FtngbcuCjS3H4g2a_65lhng').then(() => {
+        newDoc.loadInfo().then(() => {
+          newSheet = newDoc.sheetsByIndex[1]; // sheet 0 is the blank default one
+          step();
+        });
+      });
+    },
+
+    function updateHeaderCellNames(step) {
+
+      /* August 2021: Header cells with duplicate strings are not supported by GoogleSpreadsheets package,
+      so this step renames the header cells with unique strings which are also more convenient for parsing. */
+
+      newSheet.setHeaderRow([
+        "timestamp",
+        "course1",
+        "difficulty1",
+        "time1",
+        "tips1",
+        "when1",
+        "secondBool",
+        "course2",
+        "difficulty2",
+        "time2",
+        "tips2",
+        "thirdBool",
+        "course3",
+        "difficulty3",
+        "time3",
+        "tips3",
+      ]).then(() => {
+        step();
+      });
     },
 
     function processAllRows(step) {
-      sheet.getRows({
+      newSheet.getRows({
         offset: 1,
         limit: 9999,
         orderby: 'col1'
       }).then(rows => {
         //now process each row into something we can use
-        //console.log('Read ' + rows.length + ' rows');
+        console.log('Read ' + rows.length + ' rows');
         underscore.each(rows, row => {
-          //console.log(row)
-          processReview(row, '');
-          if (row.didyoutakeasecondcoursethisquarter == 'Yes') {
-            processReview(row, '_2');
+          processReview(row, '1');
+          if (row['secondBool'] == 'Yes') {
+            processReview(row, '2');
           }
-          if (row.didyoutakeathirdcoursethisquarter == 'Yes') {
-            processReview(row, '_3');
+          if (row['thirdBool'] == 'Yes') {
+            processReview(row, '3');
           }
         });
 
@@ -359,6 +405,7 @@ function buildCourseData() {
         json = JSON.stringify(appData);
         //Alternative implementation: coursedata.json is written to a local file and re-used
         //fs.writeFile('coursedata.json', json, 'utf8', dataDoneCallback);
+        console.log("pizza's done");
         step();
       });
     }
