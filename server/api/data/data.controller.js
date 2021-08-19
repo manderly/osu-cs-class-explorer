@@ -305,7 +305,6 @@ function buildCourseData() {
           step();
         });
       });
-      
 
       /* eslint-enable camelcase, max-len */
       //await doc.useServiceAccountAuth(credsJson, step);
@@ -329,7 +328,7 @@ function buildCourseData() {
         offset: 1,
         limit: 9999,
         orderby: 'col1'
-      }).then((rows) => {
+      }).then(rows => {
         //now process each row into something we can use
         //console.log('Read ' + rows.length + ' rows');
         underscore.each(rows, row => {
