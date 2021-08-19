@@ -35,10 +35,13 @@ body {
 
 // Component styles are injected through gulp
 /* inject:scss */
-@import 'main/main';
-@import '../components/footer/footer';
 @import '../components/modal/modal';
 /* endinject */
+
+@import 'main/main';
+@import '../components/footer/footer';
+
+
 
 .donutLegend li {
   list-style: none;

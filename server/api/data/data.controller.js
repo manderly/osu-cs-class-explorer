@@ -165,7 +165,9 @@ function processReview(row, postfix) {
   if (postfix == '') {
     //on the first course, so check #2 and #2
     if (row.didyoutakeasecondcoursethisquarter == 'Yes') {
-      companion2 = row.whatcoursedidyoutake_2.substring(0, 6).split(' ').join('');
+      companion2 = row.whatcoursedidyoutake_2.substring(0, 6)
+      .split(' ')
+      .join('');
 
       if (!courses[key].pairings[companion2]) {
         courses[key].pairings[companion2] = 1; //init
@@ -175,7 +177,9 @@ function processReview(row, postfix) {
     }
 
     if (row.didyoutakeathirdcoursethisquarter == 'Yes') {
-      companion3 = row.whatcoursedidyoutake_3.substring(0, 6).split(' ').join('');
+      companion3 = row.whatcoursedidyoutake_3.substring(0, 6)
+      .split(' ')
+      .join('');
 
       if (!courses[key].pairings[companion3]) {
         courses[key].pairings[companion3] == 1;
@@ -185,7 +189,9 @@ function processReview(row, postfix) {
     }
   } else if (postfix == '_2') {
       //grab #1 and check if #3 exists
-      companion1 = row.whatcoursedidyoutake.substring(0, 6).split(' ').join('');
+      companion1 = row.whatcoursedidyoutake.substring(0, 6)
+      .split(' ')
+      .join('');
 
       if (!courses[key].pairings[companion1]) {
         courses[key].pairings[companion1] = 1;
@@ -194,7 +200,9 @@ function processReview(row, postfix) {
       }
 
       if (row.didyoutakeathirdcoursethisquarter == 'Yes') {
-        companion3 = row.whatcoursedidyoutake_3.substring(0, 6).split(' ').join('');
+        companion3 = row.whatcoursedidyoutake_3.substring(0, 6)
+        .split(' ')
+        .join('');
 
         if (!courses[key].pairings[companion3]) {
           courses[key].pairings[companion3] = 1;
@@ -204,14 +212,19 @@ function processReview(row, postfix) {
       }
   } else if (postfix == '_3') {
       //grab #1 and #2
-      companion1 = row.whatcoursedidyoutake.substring(0, 6).split(' ').join('');
+      companion1 = row.whatcoursedidyoutake.substring(0, 6)
+      .split(' ')
+      .join('');
+
       if (!courses[key].pairings[companion1]) {
         courses[key].pairings[companion1] = 1;
       } else {
         courses[key].pairings[companion1] += 1;
       }
 
-      companion2 = row.whatcoursedidyoutake_2.substring(0, 6).split(' ').join('');
+      companion2 = row.whatcoursedidyoutake_2.substring(0, 6)
+      .split(' ')
+      .join('');
       if (!courses[key].pairings[companion2]) {
         courses[key].pairings[companion2] = 1;
       } else {
@@ -257,7 +270,6 @@ function processPairingData() {
       courses[key].commonPairingsNames.push(sorted[i][0]);
       courses[key].commonPairingsCounts.push(sorted[i][1]);
     }
-
   }
 }
 
@@ -353,15 +365,6 @@ function buildCourseData() {
   function() {
     courseData = JSON.parse(json);
   });
-}
-
-//credit: https://gist.github.com/christopherscott/2782634
-function getJsDateFromExcel(excelDate) {
-  // JavaScript dates can be constructed by passing milliseconds
-  // since the Unix epoch (January 1, 1970) example: new Date(12312512312);
-  // 1. Subtract number of days between Jan 1, 1900 and Jan 1, 1970, plus 1 (Google "excel leap year bug")
-  // 2. Convert to milliseconds.
-  return new Date((excelDate - (25567 + 1)) * 86400 * 1000);
 }
 
 /* Set courseData to the result of running buildCourseData */
