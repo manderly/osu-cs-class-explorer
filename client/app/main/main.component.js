@@ -51,7 +51,7 @@ export class MainController {
   $onInit() {
     this.$http.get('/api/data')
       .then(response => {
-        this.courses = response.data.courseData.courses;
+        this.courses = response.data.courseData['courses'];
         this.reviewCount = response.data.courseData.reviewCount;
         this.courseNames = response.data.courseData.courseNames.sort();
         //format the timestamp and make it local to the user's timezone, rather than UTC

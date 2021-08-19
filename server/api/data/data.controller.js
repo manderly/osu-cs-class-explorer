@@ -103,10 +103,12 @@ function processReview(row, postfix) {
 
   /* Make a new tip object and get the timestamp so we can display the tip's age */
   let tip = {};
+
   if (row[whatTipsWouldYouGive]) {
+    
     //push the tip and the date of that tip
     //let rawTimestamp = getJsDateFromExcel(row['timestamp']);
-    let rawTimestamp = row.timestamp;
+    let rawTimestamp = row['Timestamp'];
     tip = {
       tip: row[whatTipsWouldYouGive],
       timestamp: moment(rawTimestamp, 'MM/DD/YYYY HH:mm:ss').format('MMMM YYYY')
