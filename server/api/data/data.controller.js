@@ -162,10 +162,10 @@ function processReview(row, postfix) {
   let companion2 = '';
   let companion3 = '';
 
-  if (postfix == '') {
+  if (postfix == '1') {
     //on the first course, so check #2 and #2
-    if (row.didyoutakeasecondcoursethisquarter == 'Yes') {
-      companion2 = row.whatcoursedidyoutake_2.substring(0, 6)
+    if (row['secondBool'] == 'Yes') {
+      companion2 = row['course2'].substring(0, 6)
       .split(' ')
       .join('');
 
@@ -176,8 +176,8 @@ function processReview(row, postfix) {
       }
     }
 
-    if (row.didyoutakeathirdcoursethisquarter == 'Yes') {
-      companion3 = row.whatcoursedidyoutake_3.substring(0, 6)
+    if (row['thirdBool'] == 'Yes') {
+      companion3 = row['course3'].substring(0, 6)
       .split(' ')
       .join('');
 
@@ -187,9 +187,9 @@ function processReview(row, postfix) {
         courses[key].pairings[companion3] += 1;
       }
     }
-  } else if (postfix == '_2') {
+  } else if (postfix == '2') {
       //grab #1 and check if #3 exists
-      companion1 = row.whatcoursedidyoutake.substring(0, 6)
+      companion1 = row['course1'].substring(0, 6)
       .split(' ')
       .join('');
 
@@ -199,8 +199,8 @@ function processReview(row, postfix) {
         courses[key].pairings[companion1] += 1;
       }
 
-      if (row.didyoutakeathirdcoursethisquarter == 'Yes') {
-        companion3 = row.whatcoursedidyoutake_3.substring(0, 6)
+      if (row['thirdBool'] == 'Yes') {
+        companion3 = row['course3'].substring(0, 6)
         .split(' ')
         .join('');
 
@@ -210,9 +210,9 @@ function processReview(row, postfix) {
           courses[key].pairings[companion3] += 1;
         }
       }
-  } else if (postfix == '_3') {
+  } else if (postfix == '3') {
       //grab #1 and #2
-      companion1 = row.whatcoursedidyoutake.substring(0, 6)
+      companion1 = row['course1'].substring(0, 6)
       .split(' ')
       .join('');
 
@@ -222,7 +222,7 @@ function processReview(row, postfix) {
         courses[key].pairings[companion1] += 1;
       }
 
-      companion2 = row.whatcoursedidyoutake_2.substring(0, 6)
+      companion2 = row['course2'].substring(0, 6)
       .split(' ')
       .join('');
       if (!courses[key].pairings[companion2]) {
@@ -405,7 +405,7 @@ function buildCourseData() {
         json = JSON.stringify(appData);
         //Alternative implementation: coursedata.json is written to a local file and re-used
         //fs.writeFile('coursedata.json', json, 'utf8', dataDoneCallback);
-        console.log("pizza's done");
+        console.log("pizza's done")
         step();
       });
     }
