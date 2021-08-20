@@ -35,10 +35,134 @@ body {
 
 // Component styles are injected through gulp
 /* inject:scss */
-@import 'main/main';
-@import '../components/footer/footer';
 @import '../components/modal/modal';
 /* endinject */
+
+:root {
+  --osuOrange: #dc4405;
+}
+
+.thing-form {
+  margin: 20px 0;
+}
+
+#banner {
+  border-bottom: none;
+  margin-top: -20px;
+}
+
+#banner h1 {
+  font-size: 52px;
+  line-height: 1;
+  letter-spacing: -1px;
+}
+
+#banner a {
+  color: #fff;
+  text-decoration: underline;
+}
+
+
+.hero-unit {
+  position: relative;
+  padding: 30px 15px;
+  color: #F5F5F5;
+  text-align: center;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+  background: #4393B9;
+}
+
+.navbar-text {
+  margin-left: 15px;
+}
+
+
+/* OSU orange */
+.orange {
+  background-color: var(--osuOrange);
+}
+
+.light-gray {
+  background-color: #eee;
+}
+
+footer {
+  clear:both;
+  width:100%;
+  margin:auto;
+  display:inline-block;
+  padding:20px 0 20px 0;
+}
+
+.huge-text {
+  font-size:60px;
+}
+
+.span-block {
+  display:block;
+}
+
+.welcome-box {
+  text-align:center;
+  font-size:21px;
+  padding:5%;
+}
+
+.welcome-box-icon {
+  color: var(--osuOrange);
+  padding: 0 5px 5px 5px;
+  font-size:10em;
+}
+
+.pad-top {
+  padding-top: 30px;
+}
+
+.pad-bottom {
+  padding-bottom: 10px;
+}
+
+.margin-bottom {
+  margin-bottom: 30px;
+}
+
+.last-built {
+  color:#999;
+}
+
+.pull-right {
+  float:right;
+}
+
+.test {
+  border: solid red 1px;
+}
+
+.banner {
+  display:block;
+  text-align:center;
+}
+
+.ui-select-match-text {
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media screen and (max-width: 600px) {
+  .hide-on-mobile {
+    visibility: hidden;
+    display: none;
+  }
+}
+
+footer.footer {
+  text-align: center;
+  padding: 30px 0;
+  margin-top: 70px;
+  border-top: 1px solid #E5E5E5;
+}
+
 
 .donutLegend li {
   list-style: none;

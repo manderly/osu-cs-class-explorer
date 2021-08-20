@@ -45,6 +45,10 @@ Run `npm test` to run the unit tests with karma.
 
 # Change log
 
+**August 2021**
+- Updated to latest google-spreadsheets node package to keep up with current Google Spreadsheets API version
+- There are now 1212 course reviews!
+
 **May 2021**
 - Maintenance: Modernized node, updated packages, added a Google ad (sorry, this app costs money to run)
 
