@@ -11,7 +11,7 @@ var moment = require('moment');
 const { GoogleSpreadsheet } = require('google-spreadsheet');
 var async = require('promise-async');
 
-const ignoreArr = process.env.ignoreArr || [];
+const ignoreArr = process.env.ignoreArr.split(',').map((e) => parseInt(e));
 
 /* Uncomment fs for file-writing capabilities. This code can be used to export a json file of the
    spreadsheet data. */
