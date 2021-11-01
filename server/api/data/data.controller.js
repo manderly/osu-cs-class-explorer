@@ -11,6 +11,8 @@ var moment = require('moment');
 const { GoogleSpreadsheet } = require('google-spreadsheet');
 var async = require('promise-async');
 
+const ignoreArr = process.env.ignoreArr || [];
+
 /* Uncomment fs for file-writing capabilities. This code can be used to export a json file of the
    spreadsheet data. */
 //var fs = require('fs');
@@ -40,7 +42,7 @@ var newDoc = new GoogleSpreadsheet(newSpreadsheetID);
 var credsJson = {
   client_email: process.env.client_email,
   private_key: process.env.private_key,
-}
+};
 
 var originalSheet;
 var newSheet;
@@ -107,18 +109,22 @@ function processReview(row, postfix) {
 
   /* Make a new tip object and get the timestamp so we can display the tip's age */
   let tip = {};
-
   if (row[whatTipsWouldYouGive]) {
-    
     //push the tip and the date of that tip
     //let rawTimestamp = getJsDateFromExcel(row['timestamp']);
-    let rawTimestamp = row['timestamp'];
+    let rawTimestamp = row.timestamp;
+    let rawTip = row[whatTipsWouldYouGive];
     tip = {
-      tip: row[whatTipsWouldYouGive],
+      tip: rawTip,
       timestamp: moment(rawTimestamp, 'MM/DD/YYYY HH:mm:ss').format('MMMM YYYY')
     };
-    courses[key].tips.unshift(tip);
-    reviewCount++;
+
+    if (ignoreArr.includes(row._rowNumber)) {
+      // do nothing;
+    } else {
+      courses[key].tips.unshift(tip);
+      reviewCount++;
+    }
   }
 
   /* Build the difficulty array, which has 5 elements: [0, 0, 0, 0, 0]
@@ -170,11 +176,10 @@ function processReview(row, postfix) {
 
   if (postfix == '1') {
     //on the first course, so check #2 and #2
-    if (row['secondBool'] == 'Yes') {
-      companion2 = row['course2'].substring(0, 6)
+    if (row.secondBool == 'Yes') {
+      companion2 = row.course2.substring(0, 6)
       .split(' ')
       .join('');
-
       if (!courses[key].pairings[companion2]) {
         courses[key].pairings[companion2] = 1; //init
       } else {
@@ -182,8 +187,8 @@ function processReview(row, postfix) {
       }
     }
 
-    if (row['thirdBool'] == 'Yes') {
-      companion3 = row['course3'].substring(0, 6)
+    if (row.thirdBool == 'Yes') {
+      companion3 = row.course3.substring(0, 6)
       .split(' ')
       .join('');
 
@@ -192,10 +197,9 @@ function processReview(row, postfix) {
       } else {
         courses[key].pairings[companion3] += 1;
       }
-    }
-  } else if (postfix == '2') {
+    } else if (postfix == '2') {
       //grab #1 and check if #3 exists
-      companion1 = row['course1'].substring(0, 6)
+      companion1 = row.course1.substring(0, 6)
       .split(' ')
       .join('');
 
@@ -205,8 +209,8 @@ function processReview(row, postfix) {
         courses[key].pairings[companion1] += 1;
       }
 
-      if (row['thirdBool'] == 'Yes') {
-        companion3 = row['course3'].substring(0, 6)
+    if (row.thirdBool == 'Yes') {
+        companion3 = row.course3.substring(0, 6)
         .split(' ')
         .join('');
 
@@ -216,9 +220,9 @@ function processReview(row, postfix) {
           courses[key].pairings[companion3] += 1;
         }
       }
-  } else if (postfix == '3') {
+    } else if (postfix == '3') {
       //grab #1 and #2
-      companion1 = row['course1'].substring(0, 6)
+      companion1 = row.course1.substring(0, 6)
       .split(' ')
       .join('');
 
@@ -228,7 +232,7 @@ function processReview(row, postfix) {
         courses[key].pairings[companion1] += 1;
       }
 
-      companion2 = row['course2'].substring(0, 6)
+      companion2 = row.course2.substring(0, 6)
       .split(' ')
       .join('');
       if (!courses[key].pairings[companion2]) {
@@ -236,6 +240,7 @@ function processReview(row, postfix) {
       } else {
         courses[key].pairings[companion2] += 1;
       }
+    }
   }
 }
 
@@ -298,104 +303,98 @@ function buildCourseData() {
         });
       });
     },
-
     /* ...then authenticate with personal spreadsheet that data gets copied into */
     function authNewDoc(step) {
-       newDoc.useServiceAccountAuth({
+      newDoc.useServiceAccountAuth({
         client_email: credsJson.client_email,
         private_key: credsJson.private_key,
       }).then(() => {
         newDoc.loadInfo().then(() => {
-          step();
-        });
-      });
-    },
-
-    function copySheet(step) {
-      // remove old sheet so they don't accumulate
-      let deleteSheet = newDoc.sheetsByIndex[1];
-      if (deleteSheet) {
-        deleteSheet.delete();
-      }
-      
-      // get the "live" sheet from the originalDoc
-      originalSheet = originalDoc.sheetsByIndex[0];
-
-      // copy it into my own doc so I can modify the header cell text
-      originalSheet.copyToSpreadsheet(newSpreadsheetID).then(() => {
-        newDoc.loadInfo().then(() => {
-          newSheet = newDoc.sheetsByIndex[1]; // sheet 0 is the blank default one
-          step();
-        });
-      });
-    },
-
-    function updateHeaderCellNames(step) {
-
-      /* August 2021: Header cells with duplicate strings are not supported by GoogleSpreadsheets package,
-      so this step renames the header cells with unique strings which are also more convenient for parsing. */
-
-      newSheet.setHeaderRow([
-        "timestamp",
-        "course1",
-        "difficulty1",
-        "time1",
-        "tips1",
-        "when1",
-        "secondBool",
-        "course2",
-        "difficulty2",
-        "time2",
-        "tips2",
-        "thirdBool",
-        "course3",
-        "difficulty3",
-        "time3",
-        "tips3",
-      ]).then(() => {
         step();
       });
-    },
+    });
+  },
 
-    function processAllRows(step) {
-      newSheet.getRows({
-        offset: 1,
-        limit: 9999,
-        orderby: 'col1'
-      }).then(rows => {
-        //now process each row into something we can use
-        //console.log('Read ' + rows.length + ' rows');
-        underscore.each(rows, row => {
-          processReview(row, '1');
-          if (row['secondBool'] == 'Yes') {
-            processReview(row, '2');
-          }
-          if (row['thirdBool'] == 'Yes') {
-            processReview(row, '3');
-          }
-        });
-
-        processPairingData();
-
-        var lastBuiltTimestamp = moment();
-
-        let appData = {
-          courses,
-          courseNames,
-          reviewCount,
-          lastBuilt: lastBuiltTimestamp
-        };
-
-        //stringify and write to file
-        json = JSON.stringify(appData);
-        //Alternative implementation: coursedata.json is written to a local file and re-used
-        //fs.writeFile('coursedata.json', json, 'utf8', dataDoneCallback);
-
-        console.log("pizza's done")
-        step();
-      });
+  function copySheet(step) {
+    // remove old sheet so they don't accumulate
+    let deleteSheet = newDoc.sheetsByIndex[1];
+    if (deleteSheet) {
+      deleteSheet.delete();
     }
-  ],
+    // get the "live" sheet from the originalDoc
+    originalSheet = originalDoc.sheetsByIndex[0];
+    // copy it into my own doc so I can modify the header cell text
+    originalSheet.copyToSpreadsheet(newSpreadsheetID).then(() => {
+      newDoc.loadInfo().then(() => {
+        newSheet = newDoc.sheetsByIndex[1]; // sheet 0 is the blank default one
+        step();
+      });
+    });
+  },
+
+  function updateHeaderCellNames(step) {
+    /* August 2021: Header cells with duplicate strings are not supported by GoogleSpreadsheets package,
+    so this step renames the header cells with unique strings which are also more convenient for parsing. */
+    newSheet.setHeaderRow([
+      'timestamp',
+      'course1',
+      'difficulty1',
+      'time1',
+      'tips1',
+      'when1',
+      'secondBool',
+      'course2',
+      'difficulty2',
+      'time2',
+      'tips2',
+      'thirdBool',
+      'course3',
+      'difficulty3',
+      'time3',
+      'tips3',
+    ]).then(() => {
+      step();
+    });
+  },
+
+  function processAllRows(step) {
+    newSheet.getRows({
+      offset: 1,
+      limit: 9999,
+      orderby: 'col1'
+    }).then(rows => {
+      //now process each row into something we can use
+      //console.log('Read ' + rows.length + ' rows');
+      underscore.each(rows, row => {
+        processReview(row, '1');
+        if (row.secondBool == 'Yes') {
+          processReview(row, '2');
+        }
+        if (row.thirdBool == 'Yes') {
+          processReview(row, '3');
+        }
+      });
+
+      processPairingData();
+
+      var lastBuiltTimestamp = moment();
+
+      let appData = {
+        courses,
+        courseNames,
+        reviewCount,
+        lastBuilt: lastBuiltTimestamp
+      };
+
+      //stringify and write to file
+      json = JSON.stringify(appData);
+      //Alternative implementation: coursedata.json is written to a local file and re-used
+      //fs.writeFile('coursedata.json', json, 'utf8', dataDoneCallback);
+
+      console.log('pizza\'s done');
+      step();
+    });
+  }],
   function() {
     courseData = JSON.parse(json);
   });
