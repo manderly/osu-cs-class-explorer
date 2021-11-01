@@ -14,12 +14,14 @@ This project was generated with the [Angular Full-Stack Generator](https://githu
 ## Prerequisites
 
 - [Git](https://git-scm.com/)
-- [Node.js and npm](nodejs.org) Node >= 15.x.x, npm >= 2.x.x
+- [Node.js and npm](nodejs.org) Node == 12.x.x, npm >= 2.x.x
 - [Gulp](http://gulpjs.com/) (`npm install --global gulp-cli`)
 
 ## Building & Running
 
-Run `npm install` to install server dependencies.
+`nvm use 12` to use version 12 of node. Gulp is on version 3 and is incompatible with more recent versions of node. I recommend using Node Version Manager to install and switch between versions of node. 
+
+Run `npm install` to install dependencies after switching to node 12.
 
 For setup on a new machine:
 
