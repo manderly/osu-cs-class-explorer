@@ -23,7 +23,7 @@
     "core-js": "^2.2.1",
     "ejs": "^2.5.3",
     "errorhandler": "^1.4.2",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "express-session": "^1.17.2",
     "fast-json-patch": "^1.0.0",
     "font-awesome": ">=4.1.0",
